@@ -2,6 +2,7 @@ rootProject.name = "IOCLens"
 
 pluginManagement {
     repositories {
+        maven { url = uri("https://maven.myket.ir/") }
         google {
             mavenContent {
                 includeGroupAndSubgroups("androidx")
@@ -17,6 +18,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         google {
+            maven { url = uri("https://maven.myket.ir/") }
             mavenContent {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")

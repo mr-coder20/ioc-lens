@@ -1,13 +1,123 @@
+# =====================================================================
+# IOC Lens .gitignore
+# Kotlin Multiplatform + Compose Multiplatform
+# Windows / macOS / Linux / Android / iOS
+# =====================================================================
+
+# ---------- Gradle / Kotlin ----------
+# (gradle/wrapper/gradle-wrapper.jar, gradlew and gradlew.bat MUST be committed)
 .gradle/
 build/
-.idea/
-*.iml
+!**/src/**/build/
+.kotlin/
+*.class
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# ---------- Android ----------
 local.properties
-.DS_Store
+*.apk
+*.aab
+*.apks
+*.ap_
+*.dex
 captures/
+.externalNativeBuild/
+.cxx/
+.navigation/
+
+# ---------- iOS / Xcode / Swift ----------
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+Pods/
+.build/
+Carthage/Build/
+*.ipa
+*.xcarchive
+*.dSYM
+*.dSYM.zip
+*.hmap
+*.moved-aside
+fastlane/report.xml
+fastlane/test_output/
+
+# ---------- Desktop packaging output (ship these via GitHub Releases) ----------
+*.msi
+*.msix
+*.exe
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.AppImage
+/dist/
+
+# ---------- Secrets & signing (NEVER commit) ----------
 *.jks
 *.keystore
-xcuserdata/
-Pods/
-DerivedData/
+keystore.properties
+secrets.properties
+*.p12
+*.p8
+*.pem
+*.key
+*.mobileprovision
+*.certSigningRequest
 .env
+.env.*
+!.env.example
+google-services.json
+GoogleService-Info.plist
+
+# ---------- IDEs & editors ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+.fleet/
+.vscode/
+.project
+.classpath
+.settings/
+*.swp
+*.swo
+
+# ---------- Windows ----------
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
+
+# ---------- macOS ----------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+
+# ---------- Linux ----------
+*~
+.directory
+.fuse_hidden*
+.Trash-*
+.nfs*
+
+# ---------- Misc ----------
+*.log
+*.tmp
+*.bak
+*.orig
+coverage/
+node_modules/
+.cache/

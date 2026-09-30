@@ -1,10 +1,6 @@
 <div align="center">
 
-# 🔍 IOC Lens
-
-**Copy it. Know in a second.**
-
-Instant, privacy-first threat-indicator triage for SOC analysts and defenders.
+<img src="docs/assets/banner.png" alt="IOC Lens: copy it, know in a second. Instant, privacy-first IOC triage for SOC analysts" width="900">
 
 [![Release](https://img.shields.io/github/v/release/mr-coder20/ioc-lens?include_prereleases&label=release&color=2ea44f)](https://github.com/mr-coder20/ioc-lens/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/mr-coder20/ioc-lens/total?color=blue)](https://github.com/mr-coder20/ioc-lens/releases)

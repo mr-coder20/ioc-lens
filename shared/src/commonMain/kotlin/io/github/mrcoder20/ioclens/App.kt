@@ -1,49 +1,39 @@
 package io.github.mrcoder20.ioclens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import ioclens.shared.generated.resources.Res
-import ioclens.shared.generated.resources.compose_multiplatform
+import io.github.mrcoder20.ioclens.core.storage.InMemoryKeyValueStorage
+import io.github.mrcoder20.ioclens.data.repository.SettingsRepositoryImpl
+import io.github.mrcoder20.ioclens.data.repository.ThreatIntelRepositoryImpl
+import io.github.mrcoder20.ioclens.domain.usecase.AnalyzeIndicatorUseCase
+import io.github.mrcoder20.ioclens.domain.usecase.GetAppSettingsUseCase
+import io.github.mrcoder20.ioclens.domain.usecase.SetIntroCompletedUseCase
+import io.github.mrcoder20.ioclens.presentation.home.HomeViewModel
+import io.github.mrcoder20.ioclens.presentation.intro.IntroViewModel
+import io.github.mrcoder20.ioclens.presentation.main.MainScreen
+import io.github.mrcoder20.ioclens.presentation.main.MainViewModel
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }
-    }
+    // Composition Root / Dependency Injection
+    val keyValueStorage = remember { InMemoryKeyValueStorage() }
+    val settingsRepository = remember { SettingsRepositoryImpl(keyValueStorage) }
+    val threatIntelRepository = remember { ThreatIntelRepositoryImpl() }
+
+    val getAppSettingsUseCase = remember { GetAppSettingsUseCase(settingsRepository) }
+    val setIntroCompletedUseCase = remember { SetIntroCompletedUseCase(settingsRepository) }
+    val analyzeIndicatorUseCase = remember { AnalyzeIndicatorUseCase(threatIntelRepository) }
+
+    val mainViewModel = remember { MainViewModel(getAppSettingsUseCase) }
+    val introViewModel = remember { IntroViewModel(setIntroCompletedUseCase, settingsRepository) }
+    val homeViewModel = remember { HomeViewModel(analyzeIndicatorUseCase, setIntroCompletedUseCase, settingsRepository) }
+
+    MainScreen(
+        mainViewModel = mainViewModel,
+        introViewModel = introViewModel,
+        homeViewModel = homeViewModel,
+        settingsRepository = settingsRepository
+    )
 }

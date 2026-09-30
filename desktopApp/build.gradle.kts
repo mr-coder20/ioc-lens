@@ -20,7 +20,7 @@ compose.desktop {
         mainClass = "io.github.mrcoder20.ioclens.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb,TargetFormat.Exe)
             packageName = "io.github.mrcoder20.ioclens"
             packageVersion = "1.0.0"
         }

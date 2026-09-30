@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"><defs>
+  <linearGradient id="ibg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0A1226"/><stop offset="1" stop-color="#1C2A6B"/>
+  </linearGradient>
+  <radialGradient id="iglow" cx="0.28" cy="0.22" r="0.85">
+    <stop offset="0" stop-color="#22D3EE" stop-opacity="0.38"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="iglow2" cx="0.9" cy="0.95" r="0.7">
+    <stop offset="0" stop-color="#7C5CFF" stop-opacity="0.45"/><stop offset="1" stop-color="#7C5CFF" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="iring" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#5EEAD4"/><stop offset="0.5" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B6CFF"/>
+  </linearGradient>
+  <linearGradient id="ihandle" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#8B6CFF"/>
+  </linearGradient>
+  <linearGradient id="ishield" x1="0.2" y1="0" x2="0.8" y2="1">
+    <stop offset="0" stop-color="#A5F3FC"/><stop offset="0.55" stop-color="#38BDF8"/><stop offset="1" stop-color="#4F7CFF"/>
+  </linearGradient>
+  <radialGradient id="ilensfill" cx="0.4" cy="0.35" r="0.75">
+    <stop offset="0" stop-color="#22D3EE" stop-opacity="0.22"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0.04"/>
+  </radialGradient></defs>
+  <!-- handle -->
+  <line x1="648" y1="648" x2="812" y2="812" stroke="url(#ihandle)" stroke-width="92" stroke-linecap="round"/>
+  <!-- lens -->
+  <circle cx="452" cy="452" r="262" fill="url(#ilensfill)"/>
+  <circle cx="452" cy="452" r="262" fill="none" stroke="url(#iring)" stroke-width="68"/>
+  <path d="M203 383 A262 262 0 0 1 345 214" fill="none" stroke="#FFFFFF" stroke-opacity="0.40" stroke-width="14" stroke-linecap="round"/>
+  <g transform="translate(452 455) scale(1.32) translate(-452 -455)">
+  <!-- shield -->
+  <path d="M452 338 L541 373 V449 C541 507 504 549 452 571 C400 549 363 507 363 449 V373 Z" fill="url(#ishield)"/>
+  <path d="M452 338 L541 373 V449 C541 507 504 549 452 571 C400 549 363 507 363 449 V373 Z" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="5"/>
+  <!-- indicator target -->
+  <circle cx="452" cy="455" r="54" fill="none" stroke="#0A1226" stroke-opacity="0.55" stroke-width="9"/>
+  <circle cx="452" cy="455" r="24" fill="#0A1226" fill-opacity="0.85"/>
+  <circle cx="452" cy="455" r="10" fill="#FFFFFF"/>
+  </g>
+</svg>
