@@ -1,8 +1,9 @@
 # Roadmap
 
-- [ ] **v0.1 Desktop MVP** (Windows, macOS, Linux): IOC parser + refang, Privacy Guard, 4 providers, explainable score, tray + global hotkey, bulk extract, history/cache, Markdown/JSON copy, secure key storage
-- [ ] **v0.2 Android + polish**: share target, Quick Settings tile, camera OCR, image OCR on desktop, themes, EN/FA/RU UI with RTL
-- [ ] **v0.3 iOS**: share extension, Shortcuts action, VisionKit OCR, TestFlight
-- [ ] **v0.4 Integrations**: MISP / OpenCTI push, SIEM deep links (Wazuh, Splunk, Elastic, Sentinel), CLI (`ioc-lens --lookup-clipboard`)
-- [ ] **v0.5 Power features**: STIX 2.1 export, allow/deny lists, custom provider plugins, more providers
-- [ ] **v1.0**: signed releases on all platforms, stable provider API, package managers (winget, Homebrew, AUR, Flatpak, F-Droid)
+Direction only. Scope will evolve.
+
+- [ ] **v0.1 Desktop MVP** (Windows, macOS, Linux): fast clipboard lookup, several free sources, explainable verdict, Privacy Guard, local history
+- [ ] **v0.2 Polish**: themes, EN / FA / RU interface, image OCR
+- [ ] **v0.3 Integrations**: MISP / OpenCTI, SIEM links, CLI
+- [ ] **v0.4 Power features**: more providers, custom provider plugins, export formats
+- [ ] **v1.0**: signed releases, stable provider API, package managers (winget, Homebrew, AUR, Flatpak)

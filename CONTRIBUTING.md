@@ -22,5 +22,5 @@ Thanks for helping! This project is small on purpose: **fast, private, single-pu
 - Shared logic goes in `shared/`; platform code only for platform APIs.
 
 ## Dev setup
-JDK 17+, Android Studio (or IntelliJ) with the Kotlin Multiplatform plugin, Xcode for iOS.
+JDK 17+ and IntelliJ IDEA with the Kotlin Multiplatform plugin.
 Run `./gradlew check` before pushing.

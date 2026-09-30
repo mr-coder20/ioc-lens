@@ -1,8 +1,12 @@
 version: 2
 updates:
-  - package-ecosystem: gradle
-    directory: "/"
-    schedule: { interval: weekly }
+  # One grouped PR per month instead of one PR per action
   - package-ecosystem: github-actions
     directory: "/"
-    schedule: { interval: weekly }
+    schedule: { interval: monthly }
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: gradle
+    directory: "/"
+    schedule: { interval: monthly }
