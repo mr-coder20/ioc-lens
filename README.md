@@ -16,7 +16,7 @@ Instant, privacy-first threat-indicator triage for SOC analysts and defenders.
 
 ### [⬇️ Download from Releases](https://github.com/mr-coder20/ioc-lens/releases)
 
-**🪟 Windows &nbsp;·&nbsp; 🍎 macOS &nbsp;·&nbsp; 🐧 Linux**
+**🪟 Windows &nbsp;·&nbsp; 🍎 macOS &nbsp;·&nbsp; 🐧 Linux &nbsp;·&nbsp; 🤖 Android &nbsp;·&nbsp; 📱 iOS**
 
 <br>
 
@@ -43,7 +43,7 @@ Instant, privacy-first threat-indicator triage for SOC analysts and defenders.
 
 </div>
 
-**IOC Lens** is a lightweight, privacy-first desktop tool for SOC analysts and defenders. Copy an IP address, domain, URL or file hash, and get one clear, explainable verdict from several threat-intelligence sources at once, without juggling browser tabs.
+**IOC Lens** is a lightweight, privacy-first cross-platform tool for SOC analysts and defenders. Copy an IP address, domain, URL or file hash, and get one clear, explainable verdict from several threat-intelligence sources at once, without juggling browser tabs.
 
 > 🚧 IOC Lens is under active development. Features and capabilities will grow and change over time.
 
@@ -56,7 +56,7 @@ Checking a suspicious indicator usually means copying it, opening several websit
 | Several tabs, several logins | One quick lookup |
 | Different answers to compare by hand | One combined, explained verdict |
 | Risk of pasting internal data into outside sites | Internal indicators stay on your machine |
-| Heavy platforms for a quick check | A small, fast desktop app |
+| Heavy platforms for a quick check | A small, fast app on every device |
 
 ## ✨ Highlights
 
@@ -65,7 +65,7 @@ Checking a suspicious indicator usually means copying it, opening several websit
 - 🔎 **Explainable**: every verdict shows which sources contributed and why
 - 🛡️ **Privacy-first**: internal indicators never leave your machine
 - 🔑 **Your keys, your control**: no account, no telemetry, keys stay local
-- 🪶 **Light and native**: small, fast, for **Windows, macOS and Linux**
+- 🪶 **Light and native**: small, fast, for **Windows, macOS, Linux, Android and iOS**
 - 🔓 **Open source** under the MIT license
 
 ## 📥 Install
@@ -78,6 +78,8 @@ Checking a suspicious indicator usually means copying it, opening several websit
    | 🪟 Windows | `.msi` |
    | 🍎 macOS | `.dmg` |
    | 🐧 Linux | `.deb` |
+   | 🤖 Android | `.apk` |
+   | 📱 iOS | TestFlight / App Store link (see the release notes) |
 
 3. Install it:
 
@@ -111,13 +113,29 @@ Checking a suspicious indicator usually means copying it, opening several websit
 
 </details>
 
+<details>
+<summary><b>🤖 Android</b></summary>
+
+1. Download the `.apk` on your phone (or copy it from your computer) and tap it.
+2. When asked, allow installing apps from this source (your browser or file manager).
+3. Open **IOC Lens**. Check an indicator by sharing text to it (**Share → IOC Lens**) or by pasting it in the app.
+
+</details>
+
+<details>
+<summary><b>📱 iOS</b></summary>
+
+iOS apps cannot be installed from a downloaded file. Use the **TestFlight / App Store link** published in the release notes (or on the Releases page) once it is available, then open **IOC Lens** and share or paste an indicator.
+
+</details>
+
 > 🔐 **Recommended:** compare the SHA-256 of your download with `SHA256SUMS.txt` from the same release.
 
 ## 🚀 Get started
 
 1. Open **Settings → Providers** and add a **free API key** for at least one source (for example VirusTotal, AbuseIPDB, AlienVault OTX or abuse.ch URLhaus). Each service offers free keys on its website.
 2. Copy any indicator: an IP, domain, URL or file hash.
-3. Use the shortcut shown in Settings, or click the tray icon. Your verdict appears in a moment.
+3. On desktop, use the shortcut shown in Settings or click the tray icon. On a phone, share the text to IOC Lens or paste it in the app. Your verdict appears in a moment.
 
 ## 🎯 Understanding verdicts
 
@@ -193,7 +211,7 @@ Released under the [MIT License](LICENSE).
 
 </div>
 
-**IOC Lens** یک ابزار دسکتاپ سبک و حریم‌خصوصی‌محور برای تحلیلگران SOC و مدافعان امنیتی است. یک آدرس IP، دامنه، URL یا هش فایل را کپی کنید و بدون باز کردن چندین تب مرورگر، یک حکم روشن و قابل‌توضیح از چند منبع threat intelligence بگیرید.
+**IOC Lens** یک ابزار چندسکویی سبک و حریم‌خصوصی‌محور برای تحلیلگران SOC و مدافعان امنیتی است. یک آدرس IP، دامنه، URL یا هش فایل را کپی کنید و بدون باز کردن چندین تب مرورگر، یک حکم روشن و قابل‌توضیح از چند منبع threat intelligence بگیرید.
 
 > 🚧 IOC Lens در حال توسعه‌ی فعال است. ویژگی‌ها و قابلیت‌ها با گذر زمان گسترش پیدا می‌کنند و ممکن است تغییر کنند.
 
@@ -206,7 +224,7 @@ Released under the [MIT License](LICENSE).
 | چند تب، چند ورود به سایت | یک جست‌وجوی سریع |
 | پاسخ‌های متفاوت برای مقایسه‌ی دستی | یک حکم ترکیبی و توضیح‌داده‌شده |
 | خطر paste کردن اطلاعات داخلی در سایت‌های بیرونی | نشانگرهای داخلی روی دستگاه شما می‌مانند |
-| پلتفرم‌های سنگین برای یک بررسی سریع | یک برنامه‌ی دسکتاپ کوچک و سریع |
+| پلتفرم‌های سنگین برای یک بررسی سریع | یک برنامه‌ی کوچک و سریع روی هر دستگاه |
 
 ## ✨ ویژگی‌های کلی
 
@@ -215,7 +233,7 @@ Released under the [MIT License](LICENSE).
 - 🔎 **قابل‌توضیح**: هر حکم نشان می‌دهد کدام منابع و چرا در آن نقش داشته‌اند
 - 🛡️ **حریم خصوصی اول**: نشانگرهای داخلی هرگز از دستگاه شما خارج نمی‌شوند
 - 🔑 **کلیدها دست خودتان است**: بدون حساب کاربری، بدون تله‌متری، کلیدها فقط محلی
-- 🪶 **سبک و بومی**: کوچک و سریع، برای **ویندوز، مک و لینوکس**
+- 🪶 **سبک و بومی**: کوچک و سریع، برای **ویندوز، مک، لینوکس، اندروید و iOS**
 - 🔓 **متن‌باز** با مجوز MIT
 
 ## 📥 نصب
@@ -228,6 +246,8 @@ Released under the [MIT License](LICENSE).
    | 🪟 ویندوز | `.msi` |
    | 🍎 مک | `.dmg` |
    | 🐧 لینوکس | `.deb` |
+   | 🤖 اندروید | `.apk` |
+   | 📱 iOS | لینک TestFlight / App Store (در توضیحات نسخه) |
 
 3. نصب کنید:
 
@@ -261,13 +281,29 @@ Released under the [MIT License](LICENSE).
 
 </details>
 
+<details>
+<summary><b>🤖 اندروید</b></summary>
+
+1. فایل `.apk` را روی گوشی دانلود کنید (یا از کامپیوتر منتقل کنید) و روی آن بزنید.
+2. هنگام درخواست، نصب برنامه از این منبع (مرورگر یا فایل‌منیجر) را مجاز کنید.
+3. **IOC Lens** را باز کنید. با اشتراک‌گذاری متن به آن (**Share ← IOC Lens**) یا paste کردن در برنامه، نشانگر را بررسی کنید.
+
+</details>
+
+<details>
+<summary><b>📱 iOS</b></summary>
+
+برنامه‌های iOS از روی فایل دانلودی نصب نمی‌شوند. وقتی **لینک TestFlight / App Store** در توضیحات نسخه (یا صفحه‌ی Releases) منتشر شد از آن استفاده کنید، سپس **IOC Lens** را باز کنید و نشانگر را share یا paste کنید.
+
+</details>
+
 > 🔐 **توصیه‌شده:** مقدار SHA-256 فایل دانلودشده را با `SHA256SUMS.txt` همان نسخه مقایسه کنید.
 
 ## 🚀 شروع کار
 
 1. به **Settings ← Providers** بروید و برای حداقل یک منبع (مثلاً VirusTotal، AbuseIPDB، AlienVault OTX یا abuse.ch URLhaus) یک **کلید API رایگان** وارد کنید. هر سرویس روی وب‌سایت خودش کلید رایگان می‌دهد.
 2. هر نشانگری را کپی کنید: IP، دامنه، URL یا هش فایل.
-3. از میانبری که در Settings نوشته شده استفاده کنید یا روی آیکون tray کلیک کنید. حکم شما در چند لحظه نمایش داده می‌شود.
+3. روی دسکتاپ از میانبری که در Settings نوشته شده استفاده کنید یا روی آیکون tray کلیک کنید. روی موبایل، متن را به IOC Lens share کنید یا در برنامه paste کنید. حکم شما در چند لحظه نمایش داده می‌شود.
 
 ## 🎯 درک حکم‌ها
 
@@ -343,7 +379,7 @@ Released under the [MIT License](LICENSE).
 
 </div>
 
-**IOC Lens** — лёгкое десктопное приложение для аналитиков SOC и защитников, в котором приватность на первом месте. Скопируйте IP-адрес, домен, URL или хеш файла и получите один понятный, объяснимый вердикт сразу от нескольких источников threat intelligence, не открывая десяток вкладок.
+**IOC Lens** — лёгкое кроссплатформенное приложение для аналитиков SOC и защитников, в котором приватность на первом месте. Скопируйте IP-адрес, домен, URL или хеш файла и получите один понятный, объяснимый вердикт сразу от нескольких источников threat intelligence, не открывая десяток вкладок.
 
 > 🚧 IOC Lens активно развивается. Функции и возможности будут расширяться и меняться со временем.
 
@@ -356,7 +392,7 @@ Released under the [MIT License](LICENSE).
 | Несколько вкладок, несколько входов в аккаунты | Одна быстрая проверка |
 | Разные ответы, которые нужно сравнивать вручную | Один объединённый и объяснённый вердикт |
 | Риск вставить внутренние данные на сторонние сайты | Внутренние индикаторы остаются на вашем компьютере |
-| Тяжёлые платформы ради быстрой проверки | Небольшое и быстрое десктопное приложение |
+| Тяжёлые платформы ради быстрой проверки | Небольшое и быстрое приложение на любом устройстве |
 
 ## ✨ Главное
 
@@ -365,7 +401,7 @@ Released under the [MIT License](LICENSE).
 - 🔎 **Объяснимо**: каждый вердикт показывает, какие источники и почему повлияли на результат
 - 🛡️ **Приватность прежде всего**: внутренние индикаторы никогда не покидают ваш компьютер
 - 🔑 **Ваши ключи под вашим контролем**: без аккаунта, без телеметрии, ключи хранятся локально
-- 🪶 **Лёгкое и нативное**: небольшое и быстрое, для **Windows, macOS и Linux**
+- 🪶 **Лёгкое и нативное**: небольшое и быстрое, для **Windows, macOS, Linux, Android и iOS**
 - 🔓 **Открытый исходный код** под лицензией MIT
 
 ## 📥 Установка
@@ -378,6 +414,8 @@ Released under the [MIT License](LICENSE).
    | 🪟 Windows | `.msi` |
    | 🍎 macOS | `.dmg` |
    | 🐧 Linux | `.deb` |
+   | 🤖 Android | `.apk` |
+   | 📱 iOS | Ссылка TestFlight / App Store (см. описание релиза) |
 
 3. Установите:
 
@@ -411,13 +449,29 @@ Released under the [MIT License](LICENSE).
 
 </details>
 
+<details>
+<summary><b>🤖 Android</b></summary>
+
+1. Скачайте `.apk` на телефон (или перенесите с компьютера) и нажмите на файл.
+2. Когда система спросит, разрешите установку приложений из этого источника (браузера или файлового менеджера).
+3. Откройте **IOC Lens**. Проверьте индикатор, отправив текст в приложение (**Поделиться → IOC Lens**) или вставив его внутри приложения.
+
+</details>
+
+<details>
+<summary><b>📱 iOS</b></summary>
+
+Приложения для iOS нельзя установить из скачанного файла. Воспользуйтесь **ссылкой TestFlight / App Store** из описания релиза (или со страницы Releases), когда она появится, затем откройте **IOC Lens** и отправьте или вставьте индикатор.
+
+</details>
+
 > 🔐 **Рекомендуется:** сверьте SHA-256 скачанного файла с `SHA256SUMS.txt` из того же релиза.
 
 ## 🚀 Быстрый старт
 
 1. Откройте **Settings → Providers** и добавьте **бесплатный API-ключ** хотя бы для одного источника (например, VirusTotal, AbuseIPDB, AlienVault OTX или abuse.ch URLhaus). Каждый сервис выдаёт бесплатные ключи на своём сайте.
 2. Скопируйте любой индикатор: IP, домен, URL или хеш файла.
-3. Используйте сочетание клавиш из Settings или нажмите на значок в трее. Вердикт появится через мгновение.
+3. На компьютере используйте сочетание клавиш из Settings или нажмите на значок в трее. На телефоне отправьте текст в IOC Lens или вставьте его в приложении. Вердикт появится через мгновение.
 
 ## 🎯 Как читать вердикты
 

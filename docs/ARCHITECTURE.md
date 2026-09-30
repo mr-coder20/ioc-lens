@@ -8,7 +8,9 @@ ioc-lens/
 │   ├── scoring/     # normalization + explainable aggregation
 │   └── storage/     # SQLDelight cache/history + SecureStore abstraction
 ├── composeApp/      # shared Compose UI (result card, history, settings)
-└── desktopApp/      # tray, global hotkey, clipboard (JVM: Windows, macOS, Linux)
+├── desktopApp/      # tray, global hotkey, clipboard (JVM: Windows, macOS, Linux)
+├── androidApp/      # share target, in-app scan
+└── iosApp/          # share extension, in-app scan (Swift glue)
 ```
 
 ## Pipeline
@@ -30,7 +32,7 @@ data class ProviderResult(
 ```
 
 ## Platform abstractions (expect/actual)
-`SecureStore`, `ClipboardSource`, `HotkeyRegistrar`, `OcrEngine` (later).
+`SecureStore`, `ClipboardSource`, `HotkeyRegistrar`, `OcrEngine`.
 
 ## Design principles
 1. Privacy first: block before sending, never log indicators remotely.
