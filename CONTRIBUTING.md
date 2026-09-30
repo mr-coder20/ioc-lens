@@ -5,7 +5,7 @@ Thanks for helping! This project is small on purpose: **fast, private, single-pu
 ## Ways to contribute
 - 🔌 **Add a provider**: implement `IntelProvider` (see `docs/ARCHITECTURE.md`)
 - 🧪 **Improve parsing**: edge cases in defang/refang, IPv6, punycode, URLs
-- 🌍 **Translate** the UI
+- 🌍 **Translate** the UI and docs (EN / FA / RU today; more welcome)
 - 🐛 **Fix bugs** / polish a platform
 - 📖 **Docs**: examples, screenshots, tutorials
 

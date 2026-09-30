@@ -39,3 +39,18 @@ data class ProviderResult(
 2. Explainable: every point in the score is traceable.
 3. Degrade gracefully: one provider down ≠ no answer.
 4. Small: fast cold start, tiny binaries, minimal dependencies.
+
+## Scoring
+For each provider that answered: `signal` (0 benign .. 1 malicious) and `confidence` (0..1).
+
+```
+score = 100 × Σ(weight × signal × confidence) / Σ(weight × confidence)
+```
+Bands: 0-19 Clean, 20-44 Low risk, 45-74 Suspicious, 75-100 Malicious, no answers = No data.
+**Escalation rule:** a strong signal from a high-confidence provider raises the verdict to at least Suspicious, so it cannot be averaged away.
+
+## Privacy Guard
+Runs before cache and network. Default blocklist: RFC 1918, CGNAT, loopback, link-local, IPv6 ULA/link-local, single-label and internal TLDs (`.local .lan .internal .corp .home.arpa`), plus user-defined CIDRs/domains. A blocked IOC never reaches a provider; the UI shows the reason.
+
+## i18n
+UI strings live in `shared/core/src/commonMain/resources/i18n/{en,fa,ru}.json`; Compose layout direction follows the locale (RTL for Persian).
