@@ -1,0 +1,11 @@
+name: 🔌 Provider request
+description: Request a new threat-intel provider
+labels: [provider, good first issue]
+body:
+  - type: input
+    id: name
+    attributes: { label: Provider name & docs URL }
+    validations: { required: true }
+  - type: textarea
+    id: terms
+    attributes: { label: Free tier / rate limits / ToS notes }
