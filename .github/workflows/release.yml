@@ -35,10 +35,10 @@ jobs:
             out: IOC-Lens-linux-amd64.deb
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: 17 }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Package
         run: ./gradlew :desktopApp:${{ matrix.task }} --no-daemon
       - name: Rename to stable name
@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir -p dist
           cp desktopApp/build/compose/binaries/main-release/${{ matrix.dir }}/*.${{ matrix.ext }} "dist/${{ matrix.out }}"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.out }}
           path: dist/${{ matrix.out }}
@@ -55,14 +55,14 @@ jobs:
     needs: [desktop]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
       - name: Checksums
         working-directory: dist
         run: sha256sum IOC-Lens-* > SHA256SUMS.txt
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: dist/*
           generate_release_notes: true
