@@ -1,10 +1,15 @@
 package io.github.mrcoder20.ioclens.presentation.home
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +33,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -49,9 +56,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.mrcoder20.ioclens.core.localization.AppTheme
 import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
 import io.github.mrcoder20.ioclens.core.theme.VerdictClean
 import io.github.mrcoder20.ioclens.core.theme.VerdictLowRisk
@@ -82,6 +91,18 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     var currentTab by remember { mutableStateOf(HomeTab.TRIAGE) }
 
+    val isDark = when (uiState.appTheme) {
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+        AppTheme.DARK -> true
+        AppTheme.LIGHT -> false
+    }
+
+    val drawerHeaderGradient = if (isDark) {
+        listOf(Color(0xFF1C2541), MaterialTheme.colorScheme.surface)
+    } else {
+        listOf(Color(0xFFB2EBF2), MaterialTheme.colorScheme.surface)
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -95,19 +116,13 @@ fun HomeScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                 ) {
-                    // Drawer Header with Glow Background
+                    // Drawer Header with Seamless Status Bar Gradient (No White Space)
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.25f),
-                                        MaterialTheme.colorScheme.surface
-                                    )
-                                )
-                            )
-                            .padding(24.dp)
+                            .background(brush = Brush.verticalGradient(colors = drawerHeaderGradient))
+                            .statusBarsPadding()
+                            .padding(20.dp)
                     ) {
                         Column {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -241,22 +256,43 @@ fun HomeScreen(
                 onClose = { currentTab = HomeTab.TRIAGE }
             )
         } else {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(20.dp)
-                    .verticalScroll(rememberScrollState())
             ) {
-                // Header with Hamburger Button & Title
-                Row(
+                // Top Ambient Background Glow (Matching Intro Slider)
+                Box(
                     modifier = Modifier
+                        .align(Alignment.TopCenter)
                         .fillMaxWidth()
-                        .padding(bottom = 20.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        .height(320.dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
+                                    MaterialTheme.colorScheme.background
+                                )
+                            )
+                        )
+                )
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding()
+                        .padding(top = 28.dp) // Status Bar Height Clearance Margin!
+                        .padding(horizontal = 20.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Header with Hamburger Button & Title
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 20.dp),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         // Hamburger Menu Button (☰)
                         Surface(
                             modifier = Modifier
@@ -266,19 +302,20 @@ fun HomeScreen(
                                         if (drawerState.isClosed) drawerState.open() else drawerState.close()
                                     }
                                 },
-                            color = MaterialTheme.colorScheme.surfaceVariant,
-                            shape = RoundedCornerShape(12.dp)
+                            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
+                            shape = RoundedCornerShape(12.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                         ) {
                             Text(
                                 text = "☰",
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                                modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
 
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(14.dp))
 
                         Column {
                             Text(
@@ -295,99 +332,95 @@ fun HomeScreen(
                         }
                     }
 
-                    // Settings Icon Quick Button (⚙️)
-                    Surface(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .clickable { currentTab = HomeTab.SETTINGS },
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = RoundedCornerShape(12.dp)
+                    // Trend Glassmorphism Search Input Card
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
                     ) {
-                        Text(
-                            text = "⚙️",
-                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
-                            fontSize = 16.sp
-                        )
-                    }
-                }
+                        Column(modifier = Modifier.padding(18.dp)) {
+                            OutlinedTextField(
+                                value = uiState.queryInput,
+                                onValueChange = { viewModel.onEvent(HomeEvent.QueryChanged(it)) },
+                                modifier = Modifier.fillMaxWidth(),
+                                placeholder = { Text(strings.searchPlaceholder, color = MaterialTheme.colorScheme.outline) },
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant
+                                ),
+                                shape = RoundedCornerShape(14.dp)
+                            )
 
-                // Search Input Card
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        OutlinedTextField(
-                            value = uiState.queryInput,
-                            onValueChange = { viewModel.onEvent(HomeEvent.QueryChanged(it)) },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text(strings.searchPlaceholder, color = MaterialTheme.colorScheme.outline) },
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant
-                            ),
-                            shape = RoundedCornerShape(12.dp)
-                        )
+                            Spacer(modifier = Modifier.height(14.dp))
 
-                        Spacer(modifier = Modifier.height(12.dp))
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (uiState.queryInput.isNotEmpty()) {
-                                TextButton(
-                                    onClick = { viewModel.onEvent(HomeEvent.ClearClicked) }
-                                ) {
-                                    Text(strings.clear, color = MaterialTheme.colorScheme.outline)
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                            }
-
-                            Button(
-                                onClick = { viewModel.onEvent(HomeEvent.AnalyzeClicked) },
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
-                                shape = RoundedCornerShape(10.dp),
-                                enabled = !uiState.isLoading
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                if (uiState.isLoading) {
-                                    CircularProgressIndicator(
-                                        modifier = Modifier.size(20.dp),
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                        strokeWidth = 2.dp
-                                    )
-                                } else {
-                                    Text(
-                                        strings.analyzeInstant,
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                        fontWeight = FontWeight.Bold
-                                    )
+                                if (uiState.queryInput.isNotEmpty()) {
+                                    TextButton(
+                                        onClick = { viewModel.onEvent(HomeEvent.ClearClicked) }
+                                    ) {
+                                        Text(strings.clear, color = MaterialTheme.colorScheme.outline)
+                                    }
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                }
+
+                                Button(
+                                    onClick = { viewModel.onEvent(HomeEvent.AnalyzeClicked) },
+                                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                                    shape = RoundedCornerShape(12.dp),
+                                    enabled = !uiState.isLoading,
+                                    modifier = Modifier.height(44.dp)
+                                ) {
+                                    if (uiState.isLoading) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier.size(20.dp),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            strokeWidth = 2.5.dp
+                                        )
+                                    } else {
+                                        Text(
+                                            strings.analyzeInstant,
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 14.sp
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                uiState.errorMessage?.let { error ->
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = error,
-                        color = VerdictMalicious,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                }
+                    uiState.errorMessage?.let { error ->
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = error,
+                            color = VerdictMalicious,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                    }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                // Verdict Result View
-                uiState.activeVerdict?.let { verdict ->
-                    VerdictCard(verdict = verdict, strings = strings)
+                    // Smooth Entrance Animation for Verdict Card
+                    AnimatedVisibility(
+                        visible = uiState.activeVerdict != null,
+                        enter = fadeIn(tween(400)) + expandVertically(tween(400)),
+                        exit = fadeOut(tween(300)) + shrinkVertically(tween(300))
+                    ) {
+                        uiState.activeVerdict?.let { verdict ->
+                            VerdictCard(verdict = verdict, strings = strings)
+                        }
+                    }
                 }
             }
         }
@@ -409,8 +442,10 @@ private fun VerdictCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, verdictColor.copy(alpha = 0.6f)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Row(
@@ -448,17 +483,43 @@ private fun VerdictCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // Confidence Score Bar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Confidence Score: ${verdict.confidenceScore}%",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            LinearProgressIndicator(
+                progress = { verdict.confidenceScore / 100f },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(6.dp)
+                    .clip(RoundedCornerShape(3.dp)),
+                color = verdictColor,
+                trackColor = MaterialTheme.colorScheme.surfaceVariant
+            )
+
             if (verdict.sourceResults.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
                     text = strings.threatIntelSourcesResults,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 verdict.sourceResults.forEach { source ->
                     SourceResultRow(source = source)
@@ -474,17 +535,18 @@ private fun SourceResultRow(source: SourceResult) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
+            .border(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f), RoundedCornerShape(10.dp))
             .padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = source.providerName,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.SemiBold
             )
             Text(
                 text = source.summary,
@@ -492,6 +554,8 @@ private fun SourceResultRow(source: SourceResult) {
                 color = MaterialTheme.colorScheme.outline
             )
         }
+
+        Spacer(modifier = Modifier.width(8.dp))
 
         Text(
             text = source.verdict.name,

@@ -2,20 +2,20 @@ package io.github.mrcoder20.ioclens.core.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Cyber Dark Theme Palette for IOC Lens
-val DarkBackground = Color(0xFF0F172A)      // Deep slate dark
-val DarkSurface = Color(0xFF1E293B)         // Card slate surface
-val DarkSurfaceVariant = Color(0xFF334155)  // Elevated variant surface
+// Trend Cyber Dark Theme Palette for IOC Lens
+val DarkBackground = Color(0xFF0B132B)      // Deep cyber slate background
+val DarkSurface = Color(0xFF1C2541)         // Glassmorphic surface card
+val DarkSurfaceVariant = Color(0xFF2A3655)  // Elevated variant surface
 
-// Light Theme Palette for IOC Lens
-val LightBackground = Color(0xFFF8FAFC)     // Crisp slate white
-val LightSurface = Color(0xFFFFFFFF)        // Pure white card
-val LightSurfaceVariant = Color(0xFFE2E8F0) // Subtle gray border/variant
+// Trend Light Theme Palette for IOC Lens
+val LightBackground = Color(0xFFF4F7FB)     // Crisp slate background
+val LightSurface = Color(0xFFFFFFFF)        // Pure white glass card
+val LightSurfaceVariant = Color(0xFFE2E8F0) // Subtle border/variant
 
-// Accents
-val PrimaryCyan = Color(0xFF06B6D4)         // Cyber Cyan primary
-val PrimaryCyanVariant = Color(0xFF0891B2)  // Darker Cyan accent
-val SecondaryTeal = Color(0xFF14B8A6)       // Vibrant Teal
+// Neon Accents
+val PrimaryCyan = Color(0xFF00D2FF)         // Neon Cyan primary
+val PrimaryCyanVariant = Color(0xFF0096C7)  // Deep Cyan accent
+val SecondaryTeal = Color(0xFF3A86FF)       // Electric Blue
 
 // Text Colors Dark
 val TextPrimaryDark = Color(0xFFF8FAFC)     // Crisp white
@@ -27,9 +27,9 @@ val TextPrimaryLight = Color(0xFF0F172A)    // Dark slate text
 val TextSecondaryLight = Color(0xFF475569)  // Medium slate text
 val TextMutedLight = Color(0xFF94A3B8)      // Light gray
 
-// Verdict Colors
+// Verdict Status Colors
 val VerdictClean = Color(0xFF10B981)        // Emerald Green
-val VerdictLowRisk = Color(0xFFEAB308)      // Yellow
-val VerdictSuspicious = Color(0xFFF97316)   // Orange
-val VerdictMalicious = Color(0xFFEF4444)    // Red
+val VerdictLowRisk = Color(0xFFF59E0B)      // Amber Yellow
+val VerdictSuspicious = Color(0xFFF97316)   // Cyber Orange
+val VerdictMalicious = Color(0xFFEF4444)    // Crimson Red
 val VerdictNoData = Color(0xFF6B7280)       // Muted Gray

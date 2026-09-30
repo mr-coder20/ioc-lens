@@ -35,33 +35,37 @@ fun MainScreen(
         appTheme = uiState.appSettings.appTheme,
         appLanguage = uiState.appSettings.appLanguage
     ) {
-        if (uiState.isLoading) {
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-            }
-        } else {
-            AnimatedContent(
-                targetState = uiState.appSettings.isIntroCompleted,
-                transitionSpec = { fadeIn() togetherWith fadeOut() },
-                modifier = modifier
-            ) { isCompleted ->
-                if (isCompleted) {
-                    HomeScreen(
-                        viewModel = homeViewModel,
-                        settingsRepository = settingsRepository
-                    )
-                } else {
-                    IntroScreen(
-                        viewModel = introViewModel,
-                        onIntroFinished = {
-                            // Handled inside IntroViewModel
-                        }
-                    )
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
+            } else {
+                AnimatedContent(
+                    targetState = uiState.appSettings.isIntroCompleted,
+                    transitionSpec = { fadeIn() togetherWith fadeOut() },
+                    modifier = Modifier.fillMaxSize()
+                ) { isCompleted ->
+                    if (isCompleted) {
+                        HomeScreen(
+                            viewModel = homeViewModel,
+                            settingsRepository = settingsRepository
+                        )
+                    } else {
+                        IntroScreen(
+                            viewModel = introViewModel,
+                            onIntroFinished = {
+                                // Handled inside IntroViewModel
+                            }
+                        )
+                    }
                 }
             }
         }

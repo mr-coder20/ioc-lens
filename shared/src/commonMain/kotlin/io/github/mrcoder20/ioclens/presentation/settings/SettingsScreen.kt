@@ -3,7 +3,6 @@ package io.github.mrcoder20.ioclens.presentation.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -20,11 +18,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -41,10 +36,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.mrcoder20.ioclens.core.components.CountryFlag
 import io.github.mrcoder20.ioclens.core.localization.AppLanguage
 import io.github.mrcoder20.ioclens.core.localization.AppTheme
 import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
-import io.github.mrcoder20.ioclens.domain.model.AppSettings
 import io.github.mrcoder20.ioclens.domain.repository.SettingsRepository
 
 @Composable
@@ -66,10 +61,11 @@ fun SettingsScreen(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(20.dp)
+            .statusBarsPadding()
+            .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 20.dp) // Clearance Margin
             .verticalScroll(scrollState)
     ) {
-        // Header
+        // Header (Balanced Uniform Top Clearance Margin)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -94,7 +90,8 @@ fun SettingsScreen(
                     .clip(RoundedCornerShape(12.dp))
                     .clickable { onClose() },
                 color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.25f))
             ) {
                 Text(
                     text = "✕",
@@ -108,7 +105,7 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // Language Section
+        // Language Section (with Canvas Vector Flags)
         SettingsCard(title = "🌐 ${strings.languageLabel}") {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 AppLanguage.entries.forEach { lang ->
@@ -130,10 +127,10 @@ fun SettingsScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(text = lang.flagEmoji, fontSize = 20.sp)
+                                CountryFlag(language = lang)
                                 Text(
                                     text = lang.displayName,
                                     style = MaterialTheme.typography.bodyLarge,
@@ -245,13 +242,20 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // API Keys Section
+        // API Keys Section with Built-in Public Intel Indicator
         SettingsCard(title = "🔑 ${strings.apiKeysTitle}") {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    text = "⚡ Built-in Public Threat Intel feeds active. You can optionally enter custom private API keys below:",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Medium
+                )
+
                 OutlinedTextField(
                     value = vtKey,
                     onValueChange = { vtKey = it },
-                    label = { Text("VirusTotal API Key") },
+                    label = { Text("VirusTotal API Key (Optional)") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
@@ -260,7 +264,7 @@ fun SettingsScreen(
                 OutlinedTextField(
                     value = abuseKey,
                     onValueChange = { abuseKey = it },
-                    label = { Text("AbuseIPDB API Key") },
+                    label = { Text("AbuseIPDB API Key (Optional)") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
@@ -269,7 +273,7 @@ fun SettingsScreen(
                 OutlinedTextField(
                     value = alienKey,
                     onValueChange = { alienKey = it },
-                    label = { Text("AlienVault OTX API Key") },
+                    label = { Text("AlienVault OTX API Key (Optional)") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp)
@@ -335,8 +339,10 @@ private fun SettingsCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

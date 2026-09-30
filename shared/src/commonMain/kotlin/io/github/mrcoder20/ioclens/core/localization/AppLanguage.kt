@@ -4,9 +4,10 @@ enum class AppLanguage(
     val code: String,
     val displayName: String,
     val flagEmoji: String,
+    val badgeCode: String,
     val isRtl: Boolean
 ) {
-    ENGLISH("en", "English", "🇬🇧", isRtl = false),
-    PERSIAN("fa", "فارسی", "🇮🇷", isRtl = true),
-    RUSSIAN("ru", "Русский", "🇷🇺", isRtl = false)
+    ENGLISH("en", "English", "🇬🇧", "EN", isRtl = false),
+    PERSIAN("fa", "فارسی", "🇮🇷", "FA", isRtl = true),
+    RUSSIAN("ru", "Русский", "🇷🇺", "RU", isRtl = false)
 }

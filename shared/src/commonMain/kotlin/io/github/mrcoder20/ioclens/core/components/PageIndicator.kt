@@ -3,6 +3,7 @@ package io.github.mrcoder20.ioclens.core.components
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ fun PageIndicator(
     pageCount: Int,
     currentPage: Int,
     modifier: Modifier = Modifier,
+    onDotClick: ((Int) -> Unit)? = null,
     activeColor: Color = MaterialTheme.colorScheme.primary,
     inactiveColor: Color = MaterialTheme.colorScheme.outline,
     indicatorHeight: Dp = 8.dp,
@@ -49,6 +51,11 @@ fun PageIndicator(
                     .width(animatedWidth)
                     .clip(CircleShape)
                     .background(if (isSelected) activeColor else inactiveColor)
+                    .then(
+                        if (onDotClick != null) {
+                            Modifier.clickable { onDotClick(i) }
+                        } else Modifier
+                    )
             )
         }
     }
