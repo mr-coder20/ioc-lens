@@ -97,10 +97,11 @@ fun HomeScreen(
         AppTheme.LIGHT -> false
     }
 
+    // Drawer Header Gradient Matches Status Bar Accent Colors Seamlessly
     val drawerHeaderGradient = if (isDark) {
-        listOf(Color(0xFF1C2541), MaterialTheme.colorScheme.surface)
+        listOf(Color(0xFF090D16), Color(0xFF131B2E))
     } else {
-        listOf(Color(0xFFB2EBF2), MaterialTheme.colorScheme.surface)
+        listOf(Color(0xFFE0F7FA), Color(0xFFB2EBF2))
     }
 
     ModalNavigationDrawer(
@@ -116,7 +117,7 @@ fun HomeScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                 ) {
-                    // Drawer Header with Seamless Status Bar Gradient (No White Space)
+                    // Drawer Header with Seamless Status Bar Gradient Match (No White Space)
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -281,8 +282,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .statusBarsPadding()
-                        .padding(top = 28.dp) // Status Bar Height Clearance Margin!
-                        .padding(horizontal = 20.dp)
+                        .padding(top = 8.dp, start = 12.dp, end = 12.dp, bottom = 8.dp) // Compact top clearance
                         .verticalScroll(rememberScrollState())
                 ) {
                     // Header with Hamburger Button & Title
@@ -337,7 +337,7 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)),
                         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
                     ) {
                         Column(modifier = Modifier.padding(18.dp)) {

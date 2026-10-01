@@ -11,32 +11,32 @@ object IntroSlideData {
                     id = 1,
                     badgeText = "Instant IOC Triage",
                     title = "Real-Time Threat Indicator Triage",
-                    subtitle = "Copy indicator. Get instant verdict.",
-                    description = "Instantly query suspicious IP addresses, domains, URLs, and file hashes (MD5/SHA256). Receive a consolidated, actionable verdict without tab overload.",
+                    subtitle = "",
+                    description = "Instantly check suspicious IP addresses, domains, URLs, and file hashes. Receive a consolidated, clear verdict from top threat databases at once.",
                     iconEmoji = "🔍"
                 ),
                 IntroSlide(
                     id = 2,
-                    badgeText = "Zero-Data-Leak Guard",
-                    title = "Local Threat Intelligence Guard",
-                    subtitle = "Private Infrastructure Stays Safe",
-                    description = "Automatically intercepts private IP ranges (RFC1918) and internal enterprise domain queries locally before any external HTTPS request is initiated.",
+                    badgeText = "100% Privacy Protection",
+                    title = "Local Privacy Guard",
+                    subtitle = "",
+                    description = "Automatically blocks private IP ranges and internal domain lookups locally before any external request is sent. Zero data leakage.",
                     iconEmoji = "🛡️"
                 ),
                 IntroSlide(
                     id = 3,
-                    badgeText = "Multi-Provider Intel",
-                    title = "Corroborated Multi-Source Verdicts",
-                    subtitle = "VirusTotal • AbuseIPDB • AlienVault OTX • URLhaus",
-                    description = "Consolidates raw detection telemetry from leading global threat feeds into one explainable risk score backed by transparent vendor breakdown.",
+                    badgeText = "Multi-Source Threat Intel",
+                    title = "Corroborated Global Intelligence",
+                    subtitle = "",
+                    description = "Consolidates detection signals from top global security feeds into one clear, explainable score backed by transparent vendor breakdown.",
                     iconEmoji = "🌐"
                 ),
                 IntroSlide(
                     id = 4,
-                    badgeText = "Zero-Telemetry Architecture",
-                    title = "Local OS Secure Key Vault",
-                    subtitle = "Direct HTTPS Lookups • Zero Middleman",
-                    description = "No backend servers, no tracking, and zero telemetry. API keys and configuration reside exclusively in your OS's native secure key storage.",
+                    badgeText = "Zero Telemetry",
+                    title = "Direct HTTPS & OS Secure Storage",
+                    subtitle = "",
+                    description = "No backend server, no registration, no tracking. API keys are kept safely in your operating system's native secure vault.",
                     iconEmoji = "🔑"
                 )
             )
@@ -45,32 +45,32 @@ object IntroSlideData {
                     id = 1,
                     badgeText = "تریاژ هوشمند IOC",
                     title = "تحلیل آنی نشانگرهای آلودگی (IOCs)",
-                    subtitle = "کپی در حافظه، تحلیل جامع در یک ثانیه",
-                    description = "بررسی فوری آدرس‌های IP، دامنه‌ها، URLها و هش فایل‌ها (MD5/SHA256). دریافت ارزیابی یکپارچه و دقیق بدون سردرگمی میان ده‌ها تب مرورگر.",
+                    subtitle = "",
+                    description = "بررسی فوری آدرس‌های IP، دامنه‌ها، URLها و هش فایل‌ها. دریافت حکم یکپارچه و دقیق از دیتابیس‌های معتبر بدون سردرگمی در تب‌های مرورگر.",
                     iconEmoji = "🔍"
                 ),
                 IntroSlide(
                     id = 2,
-                    badgeText = "امنیتی و حریم‌خصوصی‌محور",
-                    title = "سامانه هوشمند Privacy Guard",
-                    subtitle = "تضمین نشت نکردن زیرساخت‌های داخلی",
-                    description = "شناسایی و مسدودسازی خودکار نشانگرهای خصوصی و درون‌شبکه‌ای (IPهای RFC1918 و دامنه‌های داخلی) پیش از خروج داده به اینترنت.",
+                    badgeText = "حریم خصوصی ۱۰۰٪",
+                    title = "محافظت هوشمند از داده‌های داخلی",
+                    subtitle = "",
+                    description = "شناسایی و مسدودسازی خودکار نشانگرهای خصوصی و درون‌شبکه‌ای (IPهای داخلی و دامنه‌های محرمانه) به صورت محلی جهت جلوگیری از نشت داده.",
                     iconEmoji = "🛡️"
                 ),
                 IntroSlide(
                     id = 3,
-                    badgeText = "تجمع اطلاعات تهدیدات (Threat Intel)",
-                    title = "ارزیابی چندمنبعه و قابل استناد",
-                    subtitle = "VirusTotal • AbuseIPDB • AlienVault OTX • URLhaus",
-                    description = "ادغام هوشمند سیگنال‌های امنیتی معتبرترین دیتابیس‌های جهان و ارائه ارزیابی واحد به همراه جزئیات شفاف (Clean, Low risk, Suspicious, Malicious).",
+                    badgeText = "Threat Intel چندمنبعه",
+                    title = "ارزیابی همزمان چندین دیتابیس جهانی",
+                    subtitle = "",
+                    description = "ادغام هوشمند سیگنال‌های امنیتی معتبرترین دیتابیس‌های threat intelligence و ارائه پاسخ واحد با جزئیات کامل و شفاف.",
                     iconEmoji = "🌐"
                 ),
                 IntroSlide(
                     id = 4,
-                    badgeText = "معماری غیرمتمرکز و بومی",
-                    title = "تضمین ۱۰۰٪ امنیت کلیدها و تله‌متری",
-                    subtitle = "بدون سرور واسط، ذخیره‌سازی در Keystore/Keyring",
-                    description = "ارتباط مستقیم و امن دستگاه شما با سرویس‌های هدف از طریق HTTPS. ذخیره کلیدهای API در کلیددان امن سیستم‌عامل بدون وجود سرور مرکزی.",
+                    badgeText = "معماری غیرمتمرکز",
+                    title = "بدون سرور واسط و ردیابی",
+                    subtitle = "",
+                    description = "بدون نیاز به ساخت حساب، بدون تله‌متری و بدون سرور مرکزی. ارتباط مستقیم و امن HTTPS دستگاه شما با دیتابیس‌های هدف.",
                     iconEmoji = "🔑"
                 )
             )
@@ -78,33 +78,33 @@ object IntroSlideData {
                 IntroSlide(
                     id = 1,
                     badgeText = "Мгновенный триаж IOC",
-                    title = "Анализ индикаторов угроз в реальном времени",
-                    subtitle = "Скопируй. Узнай за секунду.",
-                    description = "Мгновенный анализ IP-адресов, доменов, URL и хешей файлов (MD5/SHA256). Единый обоснованный вердикт без десятков открытых вкладок.",
+                    title = "Экспресс-анализ индикаторов угроз",
+                    subtitle = "",
+                    description = "Быстрая проверка IP-адресов, доменов, URL и хешей файлов. Единый понятный вердикт из ведущих баз данных угроз.",
                     iconEmoji = "🔍"
                 ),
                 IntroSlide(
                     id = 2,
-                    badgeText = "Защита от утечек",
-                    title = "Локальный модуль Privacy Guard",
-                    subtitle = "Защита внутренней инфраструктуры",
-                    description = "Автоматический перехват частных IP-диапазонов (RFC1918) и внутренних доменов на устройстве до отправки любых внешних сетевых запросов.",
+                    badgeText = "100% Защита данных",
+                    title = "Модуль Privacy Guard",
+                    subtitle = "",
+                    description = "Автоматическая локальная блокировка запросов внутренних IP и приватных доменов для исключения утечек информации.",
                     iconEmoji = "🛡️"
                 ),
                 IntroSlide(
                     id = 3,
                     badgeText = "Мультипровайдерный Threat Intel",
-                    title = "Обоснованный вердикт из множества источников",
-                    subtitle = "VirusTotal • AbuseIPDB • AlienVault OTX • URLhaus",
-                    description = "Консолидация данных ведущих мировых фидов угроз в единую оценку риска с прозрачной детализацией по источникам.",
+                    title = "Единый вердикт из мировых баз",
+                    subtitle = "",
+                    description = "Объединение сигналов ведущих глобальных сервисов threat intelligence в один понятный вердикт с подробной детализацией.",
                     iconEmoji = "🌐"
                 ),
                 IntroSlide(
                     id = 4,
-                    badgeText = "Безопасная архитектура",
-                    title = "Защищённое локальное хранилище",
-                    subtitle = "Прямые HTTPS-запросы • Без посредников",
-                    description = "Никаких промежуточных серверов и слежки. Ключи API и настройки хранятся исключительно в защищённом хранилище вашей ОС.",
+                    badgeText = "Без телеметрии",
+                    title = "Прямое соединение и локальная защита",
+                    subtitle = "",
+                    description = "Без сторонних серверов, регистрации и слежки. Ключи API хранятся исключительно в локальном защищённом хранилище ОС.",
                     iconEmoji = "🔑"
                 )
             )

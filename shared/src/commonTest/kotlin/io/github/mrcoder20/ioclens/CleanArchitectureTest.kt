@@ -25,12 +25,11 @@ class CleanArchitectureTest {
         val getIntroUseCase = GetAppSettingsUseCase(settingsRepo)
         val setIntroUseCase = SetIntroCompletedUseCase(settingsRepo)
 
-        // Initial default theme should be SYSTEM
-        assertEquals(AppTheme.SYSTEM, settingsRepo.getSettings().appTheme)
+        // Initial default theme should be DARK
+        assertEquals(AppTheme.DARK, settingsRepo.getSettings().appTheme)
 
-        // Initial default language should match system language
-        val expectedSystemLang = getSystemLanguage()
-        assertEquals(expectedSystemLang, settingsRepo.getSettings().appLanguage)
+        // Initial default language should be ENGLISH
+        assertEquals(AppLanguage.ENGLISH, settingsRepo.getSettings().appLanguage)
 
         // Complete intro
         setIntroUseCase(completed = true)

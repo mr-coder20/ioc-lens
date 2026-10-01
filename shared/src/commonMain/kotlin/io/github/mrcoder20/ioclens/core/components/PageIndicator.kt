@@ -28,10 +28,10 @@ fun PageIndicator(
     onDotClick: ((Int) -> Unit)? = null,
     activeColor: Color = MaterialTheme.colorScheme.primary,
     inactiveColor: Color = MaterialTheme.colorScheme.outline,
-    indicatorHeight: Dp = 8.dp,
-    activeIndicatorWidth: Dp = 24.dp,
-    inactiveIndicatorWidth: Dp = 8.dp,
-    spacing: Dp = 8.dp
+    indicatorHeight: Dp = 6.dp,
+    activeIndicatorWidth: Dp = 18.dp,
+    inactiveIndicatorWidth: Dp = 6.dp,
+    spacing: Dp = 5.dp
 ) {
     Row(
         modifier = modifier,

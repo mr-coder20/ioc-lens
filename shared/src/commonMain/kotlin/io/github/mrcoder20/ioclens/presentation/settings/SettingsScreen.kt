@@ -62,7 +62,7 @@ fun SettingsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
-            .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 20.dp) // Clearance Margin
+            .padding(top = 28.dp, start = 12.dp, end = 12.dp, bottom = 20.dp) // Full-bleed layout
             .verticalScroll(scrollState)
     ) {
         // Header (Balanced Uniform Top Clearance Margin)

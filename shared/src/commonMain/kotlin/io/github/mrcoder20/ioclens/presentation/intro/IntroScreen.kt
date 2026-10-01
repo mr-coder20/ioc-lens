@@ -5,8 +5,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,14 +16,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -46,16 +47,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.github.mrcoder20.ioclens.core.components.AnimatedSnowBackground
 import io.github.mrcoder20.ioclens.core.components.CountryFlag
 import io.github.mrcoder20.ioclens.core.components.PageIndicator
+import io.github.mrcoder20.ioclens.core.components.SlideAnimatedGraphic
+import io.github.mrcoder20.ioclens.core.components.TypewriterText
 import io.github.mrcoder20.ioclens.core.localization.AppLanguage
 import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
 import io.github.mrcoder20.ioclens.domain.model.IntroSlide
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 @Composable
 fun IntroScreen(
@@ -68,6 +74,8 @@ fun IntroScreen(
     val pagerState = rememberPagerState(pageCount = { uiState.slides.size })
     val coroutineScope = rememberCoroutineScope()
     var isLanguageMenuExpanded by remember { mutableStateOf(false) }
+
+    val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(pagerState.currentPage) {
         viewModel.onEvent(IntroEvent.PageChanged(pagerState.currentPage))
@@ -100,17 +108,23 @@ fun IntroScreen(
                 )
         )
 
+        // Animated Falling Cyber Particles / Snow Background
+        AnimatedSnowBackground(
+            isDark = isDark,
+            modifier = Modifier.fillMaxSize()
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
-                .padding(top = 20.dp) // Generous top clearance margin below selfie camera
+                .padding(top = 8.dp) // Neat compact top clearance
         ) {
             // Top Bar with App Title & Language Selector (Vector Flags)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 12.dp),
+                    .padding(horizontal = 20.dp, vertical = 6.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -125,14 +139,14 @@ fun IntroScreen(
                 Box {
                     Surface(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
+                            .clip(RoundedCornerShape(50))
                             .clickable { isLanguageMenuExpanded = true },
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
-                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.85f),
+                        shape = RoundedCornerShape(50),
                         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f))
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
@@ -174,31 +188,44 @@ fun IntroScreen(
                 }
             }
 
-            // Pager Content
+            // Full-Bleed Edge-to-Edge Pager Content with 3D Book Page-Flip Transition
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
             ) { page ->
+                val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+                val absOffset = pageOffset.absoluteValue.coerceIn(0f, 1f)
+
                 IntroSlideCard(
                     slide = uiState.slides[page],
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 2.dp, vertical = 4.dp)
+                        .graphicsLayer {
+                            // 3D Book Page-Flip, Scale, and Fade Effect
+                            alpha = 1f - (absOffset * 0.6f)
+                            scaleX = 0.92f + (1f - absOffset) * 0.08f
+                            scaleY = 0.92f + (1f - absOffset) * 0.08f
+                            rotationY = pageOffset * -16f
+                            cameraDistance = 8f * density
+                        }
                 )
             }
 
-            // Perfectly Balanced Symmetrical Bottom Navigation Bar
-            // Left: Back/Previous | Center: Locked Page Indicators | Right: Next/Start
+            // Perfectly Balanced Symmetrical Bottom Navigation Bar with Navigation Bar Clearance
+            // Left: Back/Previous | Center: All 4 Locked Page Indicators | Right: Next/Start
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 20.dp),
+                    .navigationBarsPadding() // Clear bottom 3-button/gesture bar!
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Left Slot: Previous Button (or placeholder)
+                // Left Slot: Compact Previous Button (or placeholder)
                 Box(
-                    modifier = Modifier.width(125.dp),
+                    modifier = Modifier.width(85.dp),
                     contentAlignment = Alignment.CenterStart
                 ) {
                     if (pagerState.currentPage > 0) {
@@ -208,15 +235,15 @@ fun IntroScreen(
                                     pagerState.animateScrollToPage(pagerState.currentPage - 1)
                                 }
                             },
-                            shape = RoundedCornerShape(12.dp),
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
+                            shape = RoundedCornerShape(50),
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                             border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
-                            modifier = Modifier.height(44.dp)
+                            modifier = Modifier.height(40.dp)
                         ) {
                             Text(
                                 text = strings.previous,
                                 fontWeight = FontWeight.SemiBold,
-                                fontSize = 13.sp,
+                                fontSize = 12.sp,
                                 maxLines = 1,
                                 softWrap = false
                             )
@@ -224,7 +251,7 @@ fun IntroScreen(
                     }
                 }
 
-                // Center Slot: Page Indicators locked in dead center
+                // Center Slot: All 4 Page Indicators locked in dead center
                 Box(
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.Center
@@ -242,9 +269,9 @@ fun IntroScreen(
                     )
                 }
 
-                // Right Slot: Next / Start Button in fixed position
+                // Right Slot: Spacious Next / Start Button Slot (Fits "Get Started 🚀" 100% without clipping)
                 Box(
-                    modifier = Modifier.width(125.dp),
+                    modifier = Modifier.width(110.dp),
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     val isLastPage = pagerState.currentPage == uiState.slides.size - 1
@@ -262,14 +289,14 @@ fun IntroScreen(
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
-                        shape = RoundedCornerShape(12.dp),
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
-                        modifier = Modifier.height(44.dp)
+                        shape = RoundedCornerShape(50),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                        modifier = Modifier.height(40.dp)
                     ) {
                         Text(
                             text = if (isLastPage) strings.start else strings.next,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             maxLines = 1,
                             softWrap = false
                         )
@@ -285,89 +312,97 @@ private fun IntroSlideCard(
     slide: IntroSlide,
     modifier: Modifier = Modifier
 ) {
-    val scrollState = rememberScrollState()
-
     Card(
         modifier = modifier.fillMaxSize(),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
         ),
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        BoxWithConstraints(
+            modifier = Modifier.fillMaxSize()
         ) {
-            // Icon Circle with Cyan Glow
-            Box(
+            val isCompact = maxHeight < 480.dp
+
+            val iconSize = if (isCompact) 60.dp else 84.dp
+            val titleSize = if (isCompact) 17.sp else 21.sp
+            val bodySize = if (isCompact) 12.sp else 14.sp
+            val spacerH = if (isCompact) 12.dp else 20.dp
+
+            val scrollState = rememberScrollState()
+
+            Column(
                 modifier = Modifier
-                    .size(90.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f))
-                    .border(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), CircleShape),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(if (isCompact) 16.dp else 24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
+                // Vector Animated Graphic
+                SlideAnimatedGraphic(
+                    slideId = slide.id,
+                    emoji = slide.iconEmoji,
+                    size = iconSize,
+                    emojiFontSize = if (isCompact) 26 else 36
+                )
+
+                Spacer(modifier = Modifier.height(spacerH))
+
+                // Badge Tag
+                Surface(
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
+                    shape = RoundedCornerShape(50),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.35f))
+                ) {
+                    Text(
+                        text = slide.badgeText,
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 5.dp),
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = if (isCompact) 11.sp else 13.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(spacerH))
+
+                // Title (Static display - no animation)
                 Text(
-                    text = slide.iconEmoji,
-                    fontSize = 40.sp
+                    text = slide.title,
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    fontSize = titleSize
+                )
+
+                if (slide.subtitle.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = slide.subtitle,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(spacerH))
+
+                // Description with High-Speed Typewriter Animation Exclusively
+                TypewriterText(
+                    text = slide.description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    fontSize = bodySize,
+                    lineHeight = if (isCompact) 18.sp else 22.sp,
+                    typingDelayMillis = 8L
                 )
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Badge Tag
-            Surface(
-                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
-                shape = RoundedCornerShape(16.dp),
-                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.35f))
-            ) {
-                Text(
-                    text = slide.badgeText,
-                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Title
-            Text(
-                text = slide.title,
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Subtitle
-            Text(
-                text = slide.subtitle,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(14.dp))
-
-            // Description
-            Text(
-                text = slide.description,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-                lineHeight = 22.sp
-            )
         }
     }
 }

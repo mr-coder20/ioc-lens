@@ -12,8 +12,10 @@ interface KeyValueStorage {
     fun setString(key: String, value: String)
 }
 
+expect fun createPersistentKeyValueStorage(): KeyValueStorage
+
 /**
- * Compose State backed InMemory KeyValueStorage.
+ * Compose State backed InMemory KeyValueStorage for testing.
  */
 class InMemoryKeyValueStorage : KeyValueStorage {
     private val booleanStorage = mutableStateMapOf<String, Boolean>()

@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -14,7 +15,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import io.github.mrcoder20.ioclens.core.localization.AppTheme
 import io.github.mrcoder20.ioclens.core.theme.IOCLensTheme
+import io.github.mrcoder20.ioclens.core.theme.SetSystemBarIconsColor
 import io.github.mrcoder20.ioclens.domain.repository.SettingsRepository
 import io.github.mrcoder20.ioclens.presentation.home.HomeScreen
 import io.github.mrcoder20.ioclens.presentation.home.HomeViewModel
@@ -35,6 +38,15 @@ fun MainScreen(
         appTheme = uiState.appSettings.appTheme,
         appLanguage = uiState.appSettings.appLanguage
     ) {
+        val isDark = when (uiState.appSettings.appTheme) {
+            AppTheme.SYSTEM -> isSystemInDarkTheme()
+            AppTheme.DARK -> true
+            AppTheme.LIGHT -> false
+        }
+
+        // Dynamically update status bar icon brightness (White in Dark theme, Dark/Black in Light theme)
+        SetSystemBarIconsColor(isDark = isDark)
+
         Box(
             modifier = modifier
                 .fillMaxSize()

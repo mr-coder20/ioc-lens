@@ -2,20 +2,20 @@ package io.github.mrcoder20.ioclens.core.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Trend Cyber Dark Theme Palette for IOC Lens
-val DarkBackground = Color(0xFF0B132B)      // Deep cyber slate background
-val DarkSurface = Color(0xFF1C2541)         // Glassmorphic surface card
-val DarkSurfaceVariant = Color(0xFF2A3655)  // Elevated variant surface
+// Vibrant Cyber Dark Theme Palette for IOC Lens
+val DarkBackground = Color(0xFF090D16)      // Ultra-deep cyber midnight blue
+val DarkSurface = Color(0xFF131B2E)         // Glassmorphic surface card
+val DarkSurfaceVariant = Color(0xFF1E2A45)  // Elevated variant surface
 
-// Trend Light Theme Palette for IOC Lens
-val LightBackground = Color(0xFFF4F7FB)     // Crisp slate background
+// Crisp Light Theme Palette for IOC Lens
+val LightBackground = Color(0xFFF0F4F8)     // Crisp slate background
 val LightSurface = Color(0xFFFFFFFF)        // Pure white glass card
 val LightSurfaceVariant = Color(0xFFE2E8F0) // Subtle border/variant
 
-// Neon Accents
-val PrimaryCyan = Color(0xFF00D2FF)         // Neon Cyan primary
-val PrimaryCyanVariant = Color(0xFF0096C7)  // Deep Cyan accent
-val SecondaryTeal = Color(0xFF3A86FF)       // Electric Blue
+// Electric Neon Accents
+val PrimaryCyan = Color(0xFF00F2FE)         // Electric Neon Cyan
+val PrimaryCyanVariant = Color(0xFF00C8FF)  // Deep Cyan accent
+val SecondaryTeal = Color(0xFF536DFE)       // Electric Indigo Accent
 
 // Text Colors Dark
 val TextPrimaryDark = Color(0xFFF8FAFC)     // Crisp white
