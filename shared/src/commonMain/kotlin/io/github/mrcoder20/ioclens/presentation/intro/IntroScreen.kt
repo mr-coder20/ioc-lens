@@ -47,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -188,7 +189,7 @@ fun IntroScreen(
                 }
             }
 
-            // Full-Bleed Edge-to-Edge Pager Content with 3D Book Page-Flip Transition
+            // Full-Bleed Edge-to-Edge Pager Content with 3D Edge-Pivot Book Flip Transition
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
@@ -203,12 +204,15 @@ fun IntroScreen(
                     modifier = Modifier
                         .padding(horizontal = 2.dp, vertical = 4.dp)
                         .graphicsLayer {
-                            // 3D Book Page-Flip, Scale, and Fade Effect
-                            alpha = 1f - (absOffset * 0.6f)
+                            // 3D Edge-Pivot Book Flip & Depth Parallax Transition
+                            transformOrigin = TransformOrigin(if (pageOffset > 0) 0f else 1f, 0.5f)
+                            rotationY = pageOffset * -25f
+                            translationX = pageOffset * size.width * 0.15f
                             scaleX = 0.92f + (1f - absOffset) * 0.08f
                             scaleY = 0.92f + (1f - absOffset) * 0.08f
-                            rotationY = pageOffset * -16f
-                            cameraDistance = 8f * density
+                            alpha = (1f - (absOffset * 0.5f)).coerceIn(0.2f, 1f)
+                            shadowElevation = (8.dp * (1f - absOffset)).toPx()
+                            cameraDistance = 10f * density
                         }
                 )
             }
