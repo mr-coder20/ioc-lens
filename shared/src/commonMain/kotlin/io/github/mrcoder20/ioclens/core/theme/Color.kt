@@ -2,30 +2,21 @@ package io.github.mrcoder20.ioclens.core.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Vibrant Cyber Dark Theme Palette for IOC Lens
-val DarkBackground = Color(0xFF090D16)      // Ultra-deep cyber midnight blue
-val DarkSurface = Color(0xFF131B2E)         // Glassmorphic surface card
-val DarkSurfaceVariant = Color(0xFF1E2A45)  // Elevated variant surface
+// Official IOC Lens App Icon Palette (extracted directly from icon.svg)
+val DarkBackground = Color(0xFF0A1226)      // Logo Midnight Blue
+val DarkSurface = Color(0xFF131F38)         // Glassmorphic Surface Card
+val DarkSurfaceVariant = Color(0xFF1C2A6B)  // Elevated Gradient Surface
 
-// Crisp Light Theme Palette for IOC Lens
-val LightBackground = Color(0xFFF0F4F8)     // Crisp slate background
-val LightSurface = Color(0xFFFFFFFF)        // Pure white glass card
-val LightSurfaceVariant = Color(0xFFE2E8F0) // Subtle border/variant
+// Electric Neon Logo Accents
+val PrimaryCyan = Color(0xFF22D3EE)         // Logo Electric Cyan
+val PrimaryCyanVariant = Color(0xFF5EEAD4)  // Logo Teal Mint Accent
+val SecondaryTeal = Color(0xFF7C5CFF)       // Logo Electric Purple Accent
+val HighlightSkyBlue = Color(0xFF38BDF8)    // Logo Sky Blue Accent
 
-// Electric Neon Accents
-val PrimaryCyan = Color(0xFF00F2FE)         // Electric Neon Cyan
-val PrimaryCyanVariant = Color(0xFF00C8FF)  // Deep Cyan accent
-val SecondaryTeal = Color(0xFF536DFE)       // Electric Indigo Accent
-
-// Text Colors Dark
-val TextPrimaryDark = Color(0xFFF8FAFC)     // Crisp white
-val TextSecondaryDark = Color(0xFF94A3B8)   // Muted slate gray
-val TextMutedDark = Color(0xFF64748B)       // Darker gray
-
-// Text Colors Light
-val TextPrimaryLight = Color(0xFF0F172A)    // Dark slate text
-val TextSecondaryLight = Color(0xFF475569)  // Medium slate text
-val TextMutedLight = Color(0xFF94A3B8)      // Light gray
+// Text Colors
+val TextPrimaryDark = Color(0xFFF9FAFB)     // Crisp White
+val TextSecondaryDark = Color(0xFF9CA3AF)   // Muted Slate Gray
+val TextMutedDark = Color(0xFF64748B)       // Darker Gray
 
 // Verdict Status Colors
 val VerdictClean = Color(0xFF10B981)        // Emerald Green

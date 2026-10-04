@@ -159,8 +159,7 @@ fun SettingsScreen(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 val themeOptions = listOf(
                     AppTheme.SYSTEM to Pair("💻", strings.systemDefaultTheme),
-                    AppTheme.DARK to Pair("🌙", strings.darkTheme),
-                    AppTheme.LIGHT to Pair("☀️", strings.lightTheme)
+                    AppTheme.DARK to Pair("🌙", strings.darkTheme)
                 )
 
                 themeOptions.forEach { (theme, pair) ->

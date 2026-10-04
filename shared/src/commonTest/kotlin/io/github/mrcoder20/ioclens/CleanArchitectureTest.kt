@@ -28,16 +28,13 @@ class CleanArchitectureTest {
         // Initial default theme should be DARK
         assertEquals(AppTheme.DARK, settingsRepo.getSettings().appTheme)
 
-        // Initial default language should be ENGLISH
-        assertEquals(AppLanguage.ENGLISH, settingsRepo.getSettings().appLanguage)
-
         // Complete intro
         setIntroUseCase(completed = true)
         assertTrue(getIntroUseCase().isIntroCompleted)
 
         // Switch Theme
-        settingsRepo.setAppTheme(AppTheme.LIGHT)
-        assertEquals(AppTheme.LIGHT, settingsRepo.getSettings().appTheme)
+        settingsRepo.setAppTheme(AppTheme.SYSTEM)
+        assertEquals(AppTheme.SYSTEM, settingsRepo.getSettings().appTheme)
 
         // Switch Language to Russian
         settingsRepo.setAppLanguage(AppLanguage.RUSSIAN)

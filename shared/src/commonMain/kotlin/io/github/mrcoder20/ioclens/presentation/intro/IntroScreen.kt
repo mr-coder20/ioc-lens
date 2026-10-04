@@ -1,38 +1,29 @@
 package io.github.mrcoder20.ioclens.presentation.intro
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,29 +32,33 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.mrcoder20.ioclens.core.components.AnimatedSnowBackground
 import io.github.mrcoder20.ioclens.core.components.CountryFlag
-import io.github.mrcoder20.ioclens.core.components.PageIndicator
+import io.github.mrcoder20.ioclens.core.components.CyberPolygonBackground
+import io.github.mrcoder20.ioclens.core.components.LiquidmorphicBackground
 import io.github.mrcoder20.ioclens.core.components.SlideAnimatedGraphic
 import io.github.mrcoder20.ioclens.core.components.TypewriterText
+import io.github.mrcoder20.ioclens.core.components.slider.OnboardingSlider
+import io.github.mrcoder20.ioclens.core.components.slider.PageTransitionStyle
 import io.github.mrcoder20.ioclens.core.localization.AppLanguage
 import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
+import io.github.mrcoder20.ioclens.core.theme.PrimaryCyan
 import io.github.mrcoder20.ioclens.domain.model.IntroSlide
-import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
 
+/**
+ * Ultra-Sleek Translucent Glassmorphism Intro Screen with 360 Clock Dial Radial Rotation.
+ */
 @Composable
 fun IntroScreen(
     viewModel: IntroViewModel,
@@ -73,10 +68,7 @@ fun IntroScreen(
     val uiState by viewModel.uiState.collectAsState()
     val strings = LocalizationProvider.getStrings(uiState.currentLanguage)
     val pagerState = rememberPagerState(pageCount = { uiState.slides.size })
-    val coroutineScope = rememberCoroutineScope()
     var isLanguageMenuExpanded by remember { mutableStateOf(false) }
-
-    val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(pagerState.currentPage) {
         viewModel.onEvent(IntroEvent.PageChanged(pagerState.currentPage))
@@ -89,224 +81,108 @@ fun IntroScreen(
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+        modifier = modifier.fillMaxSize()
     ) {
-        // Ambient Cyber Background Glow
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth()
-                .height(320.dp)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.22f),
-                            MaterialTheme.colorScheme.background
-                        )
-                    )
-                )
-        )
-
-        // Animated Falling Cyber Particles / Snow Background
-        AnimatedSnowBackground(
-            isDark = isDark,
+        // 1. Liquidmorphism Animated Background Blobs
+        LiquidmorphicBackground(
             modifier = Modifier.fillMaxSize()
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .padding(top = 8.dp) // Neat compact top clearance
-        ) {
-            // Top Bar with App Title & Language Selector (Vector Flags)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 6.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "IOC Lens",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold
-                )
+        // 2. Fractured Cyber Polygon Mesh Background
+        CyberPolygonBackground(
+            modifier = Modifier.fillMaxSize()
+        )
 
-                // Clean Vector Flag Language Selector Button
-                Box {
-                    Surface(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(50))
-                            .clickable { isLanguageMenuExpanded = true },
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.85f),
-                        shape = RoundedCornerShape(50),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.35f))
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            CountryFlag(language = uiState.currentLanguage)
-                            Text(
-                                text = uiState.currentLanguage.displayName,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-
-                    DropdownMenu(
-                        expanded = isLanguageMenuExpanded,
-                        onDismissRequest = { isLanguageMenuExpanded = false }
-                    ) {
-                        AppLanguage.entries.forEach { lang ->
-                            DropdownMenuItem(
-                                text = {
-                                    Row(
-                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        CountryFlag(language = lang)
-                                        Text(
-                                            text = lang.displayName,
-                                            fontWeight = if (lang == uiState.currentLanguage) FontWeight.Bold else FontWeight.Normal
-                                        )
-                                    }
-                                },
-                                onClick = {
-                                    viewModel.onEvent(IntroEvent.LanguageChanged(lang))
-                                    isLanguageMenuExpanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-
-            // Full-Bleed Edge-to-Edge Pager Content with 3D Edge-Pivot Book Flip Transition
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            ) { page ->
-                val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-                val absOffset = pageOffset.absoluteValue.coerceIn(0f, 1f)
-
-                IntroSlideCard(
-                    slide = uiState.slides[page],
+        // 3. Onboarding Slider Container with 360 Clock Dial Radial Rotation Transition
+        OnboardingSlider(
+            items = uiState.slides,
+            pagerState = pagerState,
+            transitionStyle = PageTransitionStyle.CLOCK_DIAL_360,
+            doneText = "DONE",
+            onFinishClicked = {
+                viewModel.onEvent(IntroEvent.CompleteClicked)
+            },
+            topBarContent = {
+                // Raycast Command Header
+                Row(
                     modifier = Modifier
-                        .padding(horizontal = 2.dp, vertical = 4.dp)
-                        .graphicsLayer {
-                            // 3D Edge-Pivot Book Flip & Depth Parallax Transition
-                            transformOrigin = TransformOrigin(if (pageOffset > 0) 0f else 1f, 0.5f)
-                            rotationY = pageOffset * -25f
-                            translationX = pageOffset * size.width * 0.15f
-                            scaleX = 0.92f + (1f - absOffset) * 0.08f
-                            scaleY = 0.92f + (1f - absOffset) * 0.08f
-                            alpha = (1f - (absOffset * 0.5f)).coerceIn(0.2f, 1f)
-                            shadowElevation = (8.dp * (1f - absOffset)).toPx()
-                            cameraDistance = 10f * density
-                        }
-                )
-            }
-
-            // Perfectly Balanced Symmetrical Bottom Navigation Bar with Navigation Bar Clearance
-            // Left: Back/Previous | Center: All 4 Locked Page Indicators | Right: Next/Start
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding() // Clear bottom 3-button/gesture bar!
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Left Slot: Compact Previous Button (or placeholder)
-                Box(
-                    modifier = Modifier.width(85.dp),
-                    contentAlignment = Alignment.CenterStart
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (pagerState.currentPage > 0) {
-                        OutlinedButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                                }
-                            },
-                            shape = RoundedCornerShape(50),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)),
-                            modifier = Modifier.height(40.dp)
-                        ) {
-                            Text(
-                                text = strings.previous,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 12.sp,
-                                maxLines = 1,
-                                softWrap = false
-                            )
-                        }
-                    }
-                }
-
-                // Center Slot: All 4 Page Indicators locked in dead center
-                Box(
-                    modifier = Modifier.weight(1f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    PageIndicator(
-                        pageCount = uiState.slides.size,
-                        currentPage = pagerState.currentPage,
-                        onDotClick = { targetPage ->
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(targetPage)
-                            }
-                        },
-                        activeColor = MaterialTheme.colorScheme.primary,
-                        inactiveColor = MaterialTheme.colorScheme.outline
-                    )
-                }
-
-                // Right Slot: Spacious Next / Start Button Slot (Fits "Get Started 🚀" 100% without clipping)
-                Box(
-                    modifier = Modifier.width(110.dp),
-                    contentAlignment = Alignment.CenterEnd
-                ) {
-                    val isLastPage = pagerState.currentPage == uiState.slides.size - 1
-                    Button(
-                        onClick = {
-                            if (isLastPage) {
-                                viewModel.onEvent(IntroEvent.CompleteClicked)
-                            } else {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                                }
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
-                        ),
-                        shape = RoundedCornerShape(50),
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
-                        modifier = Modifier.height(40.dp)
+                    // Title Badge (Clean - without v1.0.0 text)
+                    Surface(
+                        color = PrimaryCyan.copy(alpha = 0.15f),
+                        shape = RoundedCornerShape(6.dp),
+                        border = androidx.compose.foundation.BorderStroke(0.8.dp, PrimaryCyan.copy(alpha = 0.35f))
                     ) {
                         Text(
-                            text = if (isLastPage) strings.start else strings.next,
+                            text = "IOC LENS",
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontFamily = FontFamily.Monospace,
+                            color = PrimaryCyan,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp,
-                            maxLines = 1,
-                            softWrap = false
+                            fontSize = 10.sp
                         )
+                    }
+
+                    // Country Flag Language Selector
+                    Box {
+                        Surface(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable { isLanguageMenuExpanded = true },
+                            color = Color(0xFF0E1424).copy(alpha = 0.85f),
+                            shape = RoundedCornerShape(8.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.12f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                CountryFlag(language = uiState.currentLanguage)
+                                Text(
+                                    text = uiState.currentLanguage.displayName,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color(0xFFF9FAFB),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
+
+                        DropdownMenu(
+                            expanded = isLanguageMenuExpanded,
+                            onDismissRequest = { isLanguageMenuExpanded = false }
+                        ) {
+                            AppLanguage.entries.forEach { lang ->
+                                DropdownMenuItem(
+                                    text = {
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            CountryFlag(language = lang)
+                                            Text(
+                                                text = lang.displayName,
+                                                fontWeight = if (lang == uiState.currentLanguage) FontWeight.Bold else FontWeight.Normal
+                                            )
+                                        }
+                                    },
+                                    onClick = {
+                                        viewModel.onEvent(IntroEvent.LanguageChanged(lang))
+                                        isLanguageMenuExpanded = false
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
+        ) { slide, _ ->
+            IntroSlideCard(slide = slide)
         }
     }
 }
@@ -316,93 +192,122 @@ private fun IntroSlideCard(
     slide: IntroSlide,
     modifier: Modifier = Modifier
 ) {
+    // Highly Translucent Glassmorphic Card (38% opacity for crystal clear background visibility)
     Card(
         modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+            containerColor = Color(0xFF0C1322).copy(alpha = 0.38f)
         ),
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        border = androidx.compose.foundation.BorderStroke(
+            1.2.dp,
+            Brush.linearGradient(
+                colors = listOf(
+                    Color.White.copy(alpha = 0.28f),
+                    PrimaryCyan.copy(alpha = 0.45f),
+                    Color.Black.copy(alpha = 0.5f)
+                )
+            )
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         BoxWithConstraints(
             modifier = Modifier.fillMaxSize()
         ) {
-            val isCompact = maxHeight < 480.dp
-
-            val iconSize = if (isCompact) 60.dp else 84.dp
-            val titleSize = if (isCompact) 17.sp else 21.sp
-            val bodySize = if (isCompact) 12.sp else 14.sp
-            val spacerH = if (isCompact) 12.dp else 20.dp
-
+            val isCompact = maxHeight < 520.dp
             val scrollState = rememberScrollState()
+            val graphicSize = if (isCompact) 100.dp else 140.dp
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(if (isCompact) 16.dp else 24.dp),
+                    .padding(horizontal = 24.dp, vertical = 12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Vector Animated Graphic
-                SlideAnimatedGraphic(
-                    slideId = slide.id,
-                    emoji = slide.iconEmoji,
-                    size = iconSize,
-                    emojiFontSize = if (isCompact) 26 else 36
-                )
-
-                Spacer(modifier = Modifier.height(spacerH))
-
-                // Badge Tag
-                Surface(
-                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.15f),
-                    shape = RoundedCornerShape(50),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = 0.35f))
+                // Top Graphic (Capped size for perfect vertical balance on wide/maximized screens)
+                Box(
+                    modifier = Modifier
+                        .size(graphicSize)
+                        .aspectRatio(1f),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = slide.badgeText,
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 5.dp),
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = if (isCompact) 11.sp else 13.sp
+                    SlideAnimatedGraphic(
+                        slideId = slide.id,
+                        emoji = slide.iconEmoji,
+                        size = if (isCompact) 52.dp else 76.dp,
+                        emojiFontSize = if (isCompact) 24 else 34
                     )
                 }
 
-                Spacer(modifier = Modifier.height(spacerH))
+                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 12.dp))
 
-                // Title (Static display - no animation)
+                // Status Badge Pill
+                Surface(
+                    color = Color(0xFF16233B).copy(alpha = 0.85f),
+                    shape = RoundedCornerShape(50),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryCyan.copy(alpha = 0.35f))
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(6.dp)
+                                .clip(CircleShape)
+                                .background(PrimaryCyan)
+                        )
+                        Text(
+                            text = slide.badgeText,
+                            color = PrimaryCyan,
+                            style = MaterialTheme.typography.labelSmall,
+                            fontFamily = FontFamily.Monospace,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = if (isCompact) 10.sp else 11.sp
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 12.dp))
+
+                // Responsive Title
                 Text(
                     text = slide.title,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFF9FAFB),
+                    fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Center,
-                    fontSize = titleSize
+                    fontSize = if (isCompact) 18.sp else 22.sp,
+                    lineHeight = if (isCompact) 24.sp else 28.sp,
+                    letterSpacing = (-0.02).sp,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
 
                 if (slide.subtitle.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = slide.subtitle,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = PrimaryCyan,
                         fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontSize = 13.sp
                     )
                 }
 
-                Spacer(modifier = Modifier.height(spacerH))
+                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 10.dp))
 
-                // Description with High-Speed Typewriter Animation Exclusively
+                // Responsive Typewriter Description Text
                 TypewriterText(
                     text = slide.description,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = Color(0xFFF9FAFB).copy(alpha = 0.85f),
                     textAlign = TextAlign.Center,
-                    fontSize = bodySize,
+                    fontSize = if (isCompact) 12.sp else 14.sp,
                     lineHeight = if (isCompact) 18.sp else 22.sp,
                     typingDelayMillis = 8L
                 )

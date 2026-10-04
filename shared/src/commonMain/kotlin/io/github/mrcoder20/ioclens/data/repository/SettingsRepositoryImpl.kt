@@ -5,6 +5,7 @@ import io.github.mrcoder20.ioclens.core.localization.AppTheme
 import io.github.mrcoder20.ioclens.core.storage.KeyValueStorage
 import io.github.mrcoder20.ioclens.domain.model.AppSettings
 import io.github.mrcoder20.ioclens.domain.repository.SettingsRepository
+import io.github.mrcoder20.ioclens.getSystemLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -60,11 +61,12 @@ class SettingsRepositoryImpl(
     }
 
     private fun loadSettingsFromStorage(): AppSettings {
+        val defaultLang = getSystemLanguage()
         val themeStr = storage.getString(KEY_THEME, AppTheme.DARK.name)
-        val langStr = storage.getString(KEY_LANGUAGE, AppLanguage.ENGLISH.name)
+        val langStr = storage.getString(KEY_LANGUAGE, defaultLang.name)
 
         val theme = runCatching { AppTheme.valueOf(themeStr) }.getOrDefault(AppTheme.DARK)
-        val language = runCatching { AppLanguage.valueOf(langStr) }.getOrDefault(AppLanguage.ENGLISH)
+        val language = runCatching { AppLanguage.valueOf(langStr) }.getOrDefault(defaultLang)
 
         return AppSettings(
             isIntroCompleted = storage.getBoolean(KEY_INTRO_COMPLETED, false),

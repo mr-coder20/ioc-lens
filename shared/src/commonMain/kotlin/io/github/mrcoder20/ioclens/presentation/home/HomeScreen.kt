@@ -9,7 +9,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,7 +59,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.github.mrcoder20.ioclens.core.localization.AppTheme
 import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
 import io.github.mrcoder20.ioclens.core.theme.VerdictClean
 import io.github.mrcoder20.ioclens.core.theme.VerdictLowRisk
@@ -91,18 +89,8 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     var currentTab by remember { mutableStateOf(HomeTab.TRIAGE) }
 
-    val isDark = when (uiState.appTheme) {
-        AppTheme.SYSTEM -> isSystemInDarkTheme()
-        AppTheme.DARK -> true
-        AppTheme.LIGHT -> false
-    }
-
-    // Drawer Header Gradient Matches Status Bar Accent Colors Seamlessly
-    val drawerHeaderGradient = if (isDark) {
-        listOf(Color(0xFF090D16), Color(0xFF131B2E))
-    } else {
-        listOf(Color(0xFFE0F7FA), Color(0xFFB2EBF2))
-    }
+    // Drawer Header Gradient Matches Status Bar Accent Colors
+    val drawerHeaderGradient = listOf(Color(0xFF090D16), Color(0xFF131B2E))
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -117,7 +105,7 @@ fun HomeScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
                 ) {
-                    // Drawer Header with Seamless Status Bar Gradient Match (No White Space)
+                    // Drawer Header
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -262,7 +250,7 @@ fun HomeScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
             ) {
-                // Top Ambient Background Glow (Matching Intro Slider)
+                // Top Ambient Background Glow
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
@@ -282,7 +270,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .statusBarsPadding()
-                        .padding(top = 8.dp, start = 12.dp, end = 12.dp, bottom = 8.dp) // Compact top clearance
+                        .padding(top = 8.dp, start = 12.dp, end = 12.dp, bottom = 8.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     // Header with Hamburger Button & Title

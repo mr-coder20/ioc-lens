@@ -18,7 +18,14 @@ class HomeViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
+    private val initialSettings = settingsRepository.getSettings()
+
+    private val _uiState = MutableStateFlow(
+        HomeUiState(
+            appTheme = initialSettings.appTheme,
+            appLanguage = initialSettings.appLanguage
+        )
+    )
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {

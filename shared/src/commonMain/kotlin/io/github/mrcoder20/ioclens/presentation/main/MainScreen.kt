@@ -41,10 +41,9 @@ fun MainScreen(
         val isDark = when (uiState.appSettings.appTheme) {
             AppTheme.SYSTEM -> isSystemInDarkTheme()
             AppTheme.DARK -> true
-            AppTheme.LIGHT -> false
         }
 
-        // Dynamically update status bar icon brightness (White in Dark theme, Dark/Black in Light theme)
+        // Dynamically update status bar icon brightness (White in Dark theme)
         SetSystemBarIconsColor(isDark = isDark)
 
         Box(

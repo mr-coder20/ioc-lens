@@ -15,7 +15,14 @@ class IntroViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(IntroUiState())
+    private val initialLang = settingsRepository.getSettings().appLanguage
+
+    private val _uiState = MutableStateFlow(
+        IntroUiState(
+            currentLanguage = initialLang,
+            slides = IntroSlideData.getSlides(initialLang)
+        )
+    )
     val uiState: StateFlow<IntroUiState> = _uiState.asStateFlow()
 
     init {
