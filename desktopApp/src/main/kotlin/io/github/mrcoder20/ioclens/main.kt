@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.text.font.FontFamily
@@ -35,6 +36,7 @@ import androidx.compose.ui.window.rememberWindowState
 import io.github.mrcoder20.ioclens.core.theme.IOCLensTheme
 import io.github.mrcoder20.ioclens.core.theme.PrimaryCyan
 import java.io.File
+import java.io.InputStream
 
 fun main() = application {
     val windowState = rememberWindowState(width = 1040.dp, height = 740.dp)
@@ -51,7 +53,7 @@ fun main() = application {
         }.getOrNull()?.let { file ->
             runCatching {
                 file.inputStream().use { stream ->
-                    BitmapPainter(loadImageBitmap(stream))
+                    BitmapPainter(stream.readAllBytes().decodeToImageBitmap())
                 }
             }.getOrNull()
         }

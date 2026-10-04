@@ -46,6 +46,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -70,7 +71,7 @@ enum class PageTransitionStyle {
 /**
  * Replicates and elevates V2rayNG/WhiteSIM IntroSliderActivity behavior.
  * Features 360-Degree (0,0) Origin Clock Rotation Page Transitions, Symmetrical Stacked Control Deck with High Z-Index,
- * RTL Keyboard Navigation Fix, Keyboard Focus Retention, Expanded 420dp Top Glow, and Crisp Vector Arrows.
+ * RTL Keyboard Navigation Fix, Permanent Keyboard Focus Retention, Expanded 420dp Top Glow, and Crisp Vector Arrows.
  */
 @Composable
 fun <T> OnboardingSlider(
@@ -91,7 +92,7 @@ fun <T> OnboardingSlider(
 
     val animSpec = remember { tween<Float>(durationMillis = 850, easing = FastOutSlowInEasing) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(pagerState.currentPage) {
         runCatching { focusRequester.requestFocus() }
     }
 
@@ -99,6 +100,14 @@ fun <T> OnboardingSlider(
         modifier = modifier
             .fillMaxSize()
             .background(containerBackgroundColor)
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        awaitPointerEvent()
+                        runCatching { focusRequester.requestFocus() }
+                    }
+                }
+            }
             .focusRequester(focusRequester)
             .focusable()
             .onPreviewKeyEvent { event ->

@@ -216,17 +216,17 @@ private fun IntroSlideCard(
         ) {
             val isCompact = maxHeight < 520.dp
             val scrollState = rememberScrollState()
-            val graphicSize = if (isCompact) 100.dp else 140.dp
+            val graphicSize = if (isCompact) 110.dp else 260.dp
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(horizontal = 24.dp, vertical = 12.dp),
+                    .padding(horizontal = 20.dp, vertical = if (isCompact) 6.dp else 14.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Top Graphic (Capped size for perfect vertical balance on wide/maximized screens)
+                // Top Graphic (Proportioned for zero mobile scrolling & large desktop view)
                 Box(
                     modifier = Modifier
                         .size(graphicSize)
@@ -236,12 +236,12 @@ private fun IntroSlideCard(
                     SlideAnimatedGraphic(
                         slideId = slide.id,
                         emoji = slide.iconEmoji,
-                        size = if (isCompact) 52.dp else 76.dp,
-                        emojiFontSize = if (isCompact) 24 else 34
+                        size = graphicSize,
+                        emojiFontSize = if (isCompact) 28 else 44
                     )
                 }
 
-                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 12.dp))
+                Spacer(modifier = Modifier.height(if (isCompact) 6.dp else 12.dp))
 
                 // Status Badge Pill
                 Surface(
@@ -250,13 +250,13 @@ private fun IntroSlideCard(
                     border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryCyan.copy(alpha = 0.35f))
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(6.dp)
+                                .size(5.dp)
                                 .clip(CircleShape)
                                 .background(PrimaryCyan)
                         )
@@ -271,7 +271,7 @@ private fun IntroSlideCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 12.dp))
+                Spacer(modifier = Modifier.height(if (isCompact) 6.dp else 12.dp))
 
                 // Responsive Title
                 Text(
@@ -280,35 +280,35 @@ private fun IntroSlideCard(
                     color = Color(0xFFF9FAFB),
                     fontWeight = FontWeight.Black,
                     textAlign = TextAlign.Center,
-                    fontSize = if (isCompact) 18.sp else 22.sp,
-                    lineHeight = if (isCompact) 24.sp else 28.sp,
+                    fontSize = if (isCompact) 17.sp else 22.sp,
+                    lineHeight = if (isCompact) 22.sp else 28.sp,
                     letterSpacing = (-0.02).sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
 
                 if (slide.subtitle.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(3.dp))
                     Text(
                         text = slide.subtitle,
                         style = MaterialTheme.typography.titleMedium,
                         color = PrimaryCyan,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center,
-                        fontSize = 13.sp
+                        fontSize = 12.sp
                     )
                 }
 
-                Spacer(modifier = Modifier.height(if (isCompact) 8.dp else 10.dp))
+                Spacer(modifier = Modifier.height(if (isCompact) 6.dp else 10.dp))
 
                 // Responsive Typewriter Description Text
                 TypewriterText(
                     text = slide.description,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFFF9FAFB).copy(alpha = 0.85f),
+                    color = Color(0xFF9CA3AF),
                     textAlign = TextAlign.Center,
                     fontSize = if (isCompact) 12.sp else 14.sp,
-                    lineHeight = if (isCompact) 18.sp else 22.sp,
+                    lineHeight = if (isCompact) 17.sp else 22.sp,
                     typingDelayMillis = 8L
                 )
             }
