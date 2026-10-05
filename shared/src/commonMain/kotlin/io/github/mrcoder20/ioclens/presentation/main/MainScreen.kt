@@ -23,6 +23,7 @@ import io.github.mrcoder20.ioclens.presentation.home.HomeScreen
 import io.github.mrcoder20.ioclens.presentation.home.HomeViewModel
 import io.github.mrcoder20.ioclens.presentation.intro.IntroScreen
 import io.github.mrcoder20.ioclens.presentation.intro.IntroViewModel
+import io.github.mrcoder20.ioclens.presentation.splash.SplashScreen
 
 @Composable
 fun MainScreen(
@@ -70,12 +71,27 @@ fun MainScreen(
                             settingsRepository = settingsRepository
                         )
                     } else {
-                        IntroScreen(
-                            viewModel = introViewModel,
-                            onIntroFinished = {
-                                // Handled inside IntroViewModel
+                        AnimatedContent(
+                            targetState = uiState.isSplashFinished,
+                            transitionSpec = { fadeIn() togetherWith fadeOut() },
+                            modifier = Modifier.fillMaxSize()
+                        ) { isSplashFinished ->
+                            if (isSplashFinished) {
+                                IntroScreen(
+                                    viewModel = introViewModel,
+                                    onIntroFinished = {
+                                        // Handled inside IntroViewModel
+                                    }
+                                )
+                            } else {
+                                SplashScreen(
+                                    appLanguage = uiState.appSettings.appLanguage,
+                                    onSplashFinished = {
+                                        mainViewModel.onSplashFinished()
+                                    }
+                                )
                             }
-                        )
+                        }
                     }
                 }
             }

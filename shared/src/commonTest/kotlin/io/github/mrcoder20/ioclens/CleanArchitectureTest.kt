@@ -10,6 +10,7 @@ import io.github.mrcoder20.ioclens.domain.model.VerdictLevel
 import io.github.mrcoder20.ioclens.domain.usecase.AnalyzeIndicatorUseCase
 import io.github.mrcoder20.ioclens.domain.usecase.GetAppSettingsUseCase
 import io.github.mrcoder20.ioclens.domain.usecase.SetIntroCompletedUseCase
+import io.github.mrcoder20.ioclens.presentation.main.MainUiState
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,6 +46,15 @@ class CleanArchitectureTest {
         settingsRepo.setAppLanguage(AppLanguage.PERSIAN)
         assertEquals(AppLanguage.PERSIAN, settingsRepo.getSettings().appLanguage)
         assertTrue(AppLanguage.PERSIAN.isRtl)
+    }
+
+    @Test
+    fun testMainUiStateSplashFinished() {
+        val initialState = MainUiState()
+        assertFalse(initialState.isSplashFinished)
+
+        val updatedState = initialState.copy(isSplashFinished = true)
+        assertTrue(updatedState.isSplashFinished)
     }
 
     @Test

@@ -90,7 +90,7 @@ fun <T> OnboardingSlider(
     val focusRequester = remember { FocusRequester() }
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
 
-    val animSpec = remember { tween<Float>(durationMillis = 850, easing = FastOutSlowInEasing) }
+    val animSpec = remember { tween<Float>(durationMillis = 350, easing = FastOutSlowInEasing) }
 
     LaunchedEffect(pagerState.currentPage) {
         runCatching { focusRequester.requestFocus() }

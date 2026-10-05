@@ -20,6 +20,10 @@ class MainViewModel(
         observeSettings()
     }
 
+    fun onSplashFinished() {
+        _uiState.update { it.copy(isSplashFinished = true) }
+    }
+
     private fun observeSettings() {
         viewModelScope.launch {
             getAppSettingsUseCase.settingsState.collect { settings ->

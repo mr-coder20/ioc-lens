@@ -30,9 +30,15 @@ private data class GridNode(
     val radius: Float
 )
 
+private class ReusablePoint(
+    var x: Float = 0f,
+    var y: Float = 0f,
+    var radius: Float = 0f
+)
+
 /**
  * Ultra-Futuristic Cyber Polygon Mesh & Fractured Line Background for Compose Multiplatform.
- * Optimized with grid spatial distribution for 120 FPS mobile performance with zero lag.
+ * Optimized with 100% Zero-Allocation in-place point buffers for butter-smooth 120 FPS performance.
  */
 @Composable
 fun CyberPolygonBackground(
@@ -40,6 +46,8 @@ fun CyberPolygonBackground(
     cols: Int = 4,
     rows: Int = 4
 ) {
+    val totalNodes = cols * rows
+
     val nodes = remember {
         val random = Random(42)
         val list = mutableListOf<GridNode>()
@@ -61,6 +69,16 @@ fun CyberPolygonBackground(
         list
     }
 
+    // Pre-allocate point buffer to avoid per-frame GC allocations
+    val pointBuffer = remember { Array(totalNodes) { ReusablePoint() } }
+
+    val primaryDotColor = remember { PrimaryCyan.copy(alpha = 0.8f) }
+    val whiteDotColor = remember { Color.White.copy(alpha = 0.9f) }
+
+    val cyanColors = remember { Array(101) { PrimaryCyan.copy(alpha = it / 100f * 0.55f) } }
+    val tealColors = remember { Array(101) { SecondaryTeal.copy(alpha = it / 100f * 0.55f) } }
+    val skyColors = remember { Array(101) { HighlightSkyBlue.copy(alpha = it / 100f * 0.55f) } }
+
     val infiniteTransition = rememberInfiniteTransition()
     val time by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -78,41 +96,44 @@ fun CyberPolygonBackground(
         val cellW = w / cols
         val cellH = h / rows
         val maxConnectDistSq = (cellW.coerceAtLeast(cellH) * 1.5f).let { it * it }
+        val maxDist = kotlin.math.sqrt(maxConnectDistSq)
 
-        val currentPoints = nodes.map { node ->
+        // Update point positions in-place
+        for (idx in 0 until totalNodes) {
+            val node = nodes[idx]
+            val pt = pointBuffer[idx]
+
             val centerX = (node.cellX + 0.5f) * cellW
             val centerY = (node.cellY + 0.5f) * cellH
 
-            val offsetX = sin(time * node.speedX + node.phaseX) * (cellW * 0.35f)
-            val offsetY = cos(time * node.speedY + node.phaseY) * (cellH * 0.35f)
-
-            Offset(centerX + offsetX, centerY + offsetY) to node.radius
+            pt.x = centerX + sin(time * node.speedX + node.phaseX) * (cellW * 0.35f)
+            pt.y = centerY + cos(time * node.speedY + node.phaseY) * (cellH * 0.35f)
+            pt.radius = node.radius
         }
 
-        // Draw Interconnecting Cyber Lines with Squared Distance Checks (Zero Sqrt Overhead)
-        val totalPoints = currentPoints.size
-        for (i in 0 until totalPoints) {
-            val (p1, _) = currentPoints[i]
-            for (j in i + 1 until totalPoints) {
-                val (p2, _) = currentPoints[j]
+        // Draw Interconnecting Cyber Lines
+        for (i in 0 until totalNodes) {
+            val p1 = pointBuffer[i]
+            for (j in i + 1 until totalNodes) {
+                val p2 = pointBuffer[j]
                 val dx = p1.x - p2.x
                 val dy = p1.y - p2.y
                 val distSq = dx * dx + dy * dy
 
                 if (distSq < maxConnectDistSq) {
                     val normDist = kotlin.math.sqrt(distSq)
-                    val maxDist = kotlin.math.sqrt(maxConnectDistSq)
-                    val lineAlpha = (1f - (normDist / maxDist)) * 0.55f
-                    val lineColor = when ((i + j) % 3) {
-                        0 -> PrimaryCyan
-                        1 -> SecondaryTeal
-                        else -> HighlightSkyBlue
+                    val alphaIndex = ((1f - (normDist / maxDist)).coerceIn(0f, 1f) * 100).toInt()
+
+                    val linePalette = when ((i + j) % 3) {
+                        0 -> cyanColors
+                        1 -> tealColors
+                        else -> skyColors
                     }
 
                     drawLine(
-                        color = lineColor.copy(alpha = lineAlpha),
-                        start = p1,
-                        end = p2,
+                        color = linePalette[alphaIndex],
+                        start = Offset(p1.x, p1.y),
+                        end = Offset(p2.x, p2.y),
                         strokeWidth = 2.0f
                     )
                 }
@@ -120,16 +141,19 @@ fun CyberPolygonBackground(
         }
 
         // Draw Glowing Cyber Vertices
-        currentPoints.forEach { (point, radius) ->
+        for (idx in 0 until totalNodes) {
+            val pt = pointBuffer[idx]
+            val centerOffset = Offset(pt.x, pt.y)
+
             drawCircle(
-                color = PrimaryCyan.copy(alpha = 0.8f),
-                radius = radius,
-                center = point
+                color = primaryDotColor,
+                radius = pt.radius,
+                center = centerOffset
             )
             drawCircle(
-                color = Color.White.copy(alpha = 0.9f),
-                radius = radius * 0.45f,
-                center = point
+                color = whiteDotColor,
+                radius = pt.radius * 0.45f,
+                center = centerOffset
             )
         }
     }

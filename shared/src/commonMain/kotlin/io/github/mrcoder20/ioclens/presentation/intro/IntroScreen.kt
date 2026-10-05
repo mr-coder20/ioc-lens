@@ -52,12 +52,11 @@ import io.github.mrcoder20.ioclens.core.components.TypewriterText
 import io.github.mrcoder20.ioclens.core.components.slider.OnboardingSlider
 import io.github.mrcoder20.ioclens.core.components.slider.PageTransitionStyle
 import io.github.mrcoder20.ioclens.core.localization.AppLanguage
-import io.github.mrcoder20.ioclens.core.localization.LocalizationProvider
 import io.github.mrcoder20.ioclens.core.theme.PrimaryCyan
 import io.github.mrcoder20.ioclens.domain.model.IntroSlide
 
 /**
- * Ultra-Sleek Translucent Glassmorphism Intro Screen with 360 Clock Dial Radial Rotation.
+ * Ultra-Sleek Translucent Glassmorphism Intro Screen with Parallax Zoom Transition & Zero-Lag Scrolling.
  */
 @Composable
 fun IntroScreen(
@@ -66,7 +65,6 @@ fun IntroScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val strings = LocalizationProvider.getStrings(uiState.currentLanguage)
     val pagerState = rememberPagerState(pageCount = { uiState.slides.size })
     var isLanguageMenuExpanded by remember { mutableStateOf(false) }
 
@@ -83,27 +81,27 @@ fun IntroScreen(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        // 1. Liquidmorphism Animated Background Blobs
+        // 1. Liquidmorphism Animated Background Blobs (Optimized Zero Allocation)
         LiquidmorphicBackground(
             modifier = Modifier.fillMaxSize()
         )
 
-        // 2. Fractured Cyber Polygon Mesh Background
+        // 2. Fractured Cyber Polygon Mesh Background (Optimized Zero Allocation Buffer)
         CyberPolygonBackground(
             modifier = Modifier.fillMaxSize()
         )
 
-        // 3. Onboarding Slider Container with 360 Clock Dial Radial Rotation Transition
+        // 3. Onboarding Slider Container with Parallax Zoom GPU Transition
         OnboardingSlider(
             items = uiState.slides,
             pagerState = pagerState,
-            transitionStyle = PageTransitionStyle.CLOCK_DIAL_360,
+            transitionStyle = PageTransitionStyle.PARALLAX_ZOOM,
             doneText = "DONE",
             onFinishClicked = {
                 viewModel.onEvent(IntroEvent.CompleteClicked)
             },
             topBarContent = {
-                // Raycast Command Header
+                // Command Header
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,7 +109,7 @@ fun IntroScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Title Badge (Clean - without v1.0.0 text)
+                    // Title Badge
                     Surface(
                         color = PrimaryCyan.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(6.dp),
@@ -182,7 +180,10 @@ fun IntroScreen(
                 }
             }
         ) { slide, _ ->
-            IntroSlideCard(slide = slide)
+            IntroSlideCard(
+                slide = slide,
+                isScrollInProgress = pagerState.isScrollInProgress
+            )
         }
     }
 }
@@ -190,9 +191,10 @@ fun IntroScreen(
 @Composable
 private fun IntroSlideCard(
     slide: IntroSlide,
+    isScrollInProgress: Boolean,
     modifier: Modifier = Modifier
 ) {
-    // Highly Translucent Glassmorphic Card (38% opacity for crystal clear background visibility)
+    // Translucent Glassmorphic Card
     Card(
         modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(20.dp),
@@ -226,7 +228,7 @@ private fun IntroSlideCard(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Top Graphic (Proportioned for zero mobile scrolling & large desktop view)
+                // Top Graphic
                 Box(
                     modifier = Modifier
                         .size(graphicSize)
@@ -237,7 +239,8 @@ private fun IntroSlideCard(
                         slideId = slide.id,
                         emoji = slide.iconEmoji,
                         size = graphicSize,
-                        emojiFontSize = if (isCompact) 28 else 44
+                        emojiFontSize = if (isCompact) 28 else 44,
+                        isScrollInProgress = isScrollInProgress
                     )
                 }
 
@@ -301,15 +304,14 @@ private fun IntroSlideCard(
 
                 Spacer(modifier = Modifier.height(if (isCompact) 6.dp else 10.dp))
 
-                // Responsive Typewriter Description Text
+                // High-Performance Instant Description Text
                 TypewriterText(
                     text = slide.description,
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color(0xFF9CA3AF),
                     textAlign = TextAlign.Center,
                     fontSize = if (isCompact) 12.sp else 14.sp,
-                    lineHeight = if (isCompact) 17.sp else 22.sp,
-                    typingDelayMillis = 8L
+                    lineHeight = if (isCompact) 17.sp else 22.sp
                 )
             }
         }
