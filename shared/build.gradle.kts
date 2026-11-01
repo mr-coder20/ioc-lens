@@ -54,7 +54,7 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
-            implementation("io.github.alexzhirkevich:compottie:2.3.2")
+            implementation("io.github.alexzhirkevich:compottie:2.3.3")
 
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
